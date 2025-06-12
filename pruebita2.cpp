@@ -7,5 +7,7 @@ int main()
     cout<<"tung tung sahur";
     cout<<"mateooooo";
     cout<<"ballerina capuccina";
+    cout<<"aaaaaaaaaaaaaaaaaaaaaaaaaaa";
+    cout<<"afaa";
     return 0;
 }
