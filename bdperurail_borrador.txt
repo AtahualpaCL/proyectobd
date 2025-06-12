@@ -1,0 +1,94 @@
+CREATE DATABASE PERURAIL;
+USE PERURAIL;
+CREATE TABLE reserva (
+	id_reversa INT (11) AUTO_INCREMENT PRIMARY KEY,
+    estado VARCHAR (25) DEFAULT NULL,
+    tipo_viaje VARCHAR (20) DEFAULT NULL,
+    fecha_reserva VARCHAR (11) DEFAULT NULL,
+    precio DECIMAL (4, 2) DEFAULT NULL
+    /* Falta 'precio' variable derivada, PK y FK */
+);
+
+CREATE TABLE pasajero (
+	id_pasajero INT (11) AUTO_INCREMENT PRIMARY KEY,
+    nombres VARCHAR (50) NOT NULL,
+    apellidos VARCHAR (50) NOT NULL,
+    email VARCHAR (100) NOT NULL,
+    nacionalidad VARCHAR (15) DEFAULT NULL,
+    telefono INT (9) DEFAULT NULL,
+    genero VARCHAR (10) NOT NULL,
+    tipo_pasajero ENUM('psjEmpresa', 'psjCorriente') NOT NULL
+    /* Falta relacion */
+);
+
+/* TABLAS HIJAS */
+CREATE TABLE psjEmpresa (
+	id_pasajero INT (11) PRIMARY KEY,
+    RUC INT (11) NOT NULL,
+    direccion VARCHAR (50) DEFAULT NULL,
+    razon_social VARCHAR (100) NOT NULL,
+    FOREIGN KEY (id_pasajero) REFERENCES pasajero (id_pasajero) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE psjCorriente (
+	id_pasajero INT PRIMARY KEY,
+    FOREIGN KEY (id_pasajero) REFERENCES pasajero (id_pasajero) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE pago (
+	id_pago INT (11) AUTO_INCREMENT PRIMARY KEY,
+    fecha_pago VARCHAR (12) DEFAULT NULL,
+    metodo_pago VARCHAR (13) DEFAULT NULL
+    /* Falta 'monto' variable derivada, PK y FK*/
+);
+
+CREATE TABLE empleado (
+	id_empleado INT (11) AUTO_INCREMENT PRIMARY KEY,
+    nombresEmp VARCHAR (50) NOT NULL,
+    apellidosEmp VARCHAR (50) NOT NULL,
+    correo VARCHAR (100) DEFAULT NULL,
+    fech_nac VARCHAR (10) NOT NULL,
+    documento VARCHAR (8) NOT NULL,
+    tipo_empleado ENUM('asesor', 'tripulanteCabina', 'chofer') NOT NULL
+    /* Falta 'edad' variable derivada PK y FK */
+);
+
+CREATE TABLE asesor (
+	id_empleado INT PRIMARY KEY,
+    estacionTrabajo VARCHAR (20) NOT NULL,
+	FOREIGN KEY (id_empleado) REFERENCES empleado (id_empleado) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE tripulanteCabina (
+	id_empleado INT PRIMARY KEY,
+    idiomas VARCHAR (2) NOT NULL,
+    FOREIGN KEY (id_empleado) REFERENCES empleado (id_empleado) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE chofer (
+	id_empleado INT PRIMARY KEY,
+    licencia VARCHAR (9) NOT NULL,
+    FOREIGN KEY (id_empleado) REFERENCES empleado (id_empleado) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE transporte (
+	id_transporte INT (11) PRIMARY KEY,
+	clase VARCHAR (15) DEFAULT NULL,
+	cantidad DECIMAL (8, 2) DEFAULT NULL,
+	aforo INT (3) DEFAULT NULL
+);
+
+CREATE TABLE horario (
+	id_horario INT (11) AUTO_INCREMENT PRIMARY KEY,
+    fecha_salida VARCHAR (10) DEFAULT NULL,
+    hora_salida VARCHAR (5) DEFAULT NULL
+    /* Falta PK y FK */
+);
+
+CREATE TABLE ruta (
+	id_ruta INT (11) AUTO_INCREMENT PRIMARY KEY,
+    ciudad_destino VARCHAR (12) DEFAULT NULL,
+    duracion_viaje VARCHAR (5) DEFAULT NULL, /* 15hrs o 30min*/
+    ciudad_origen VARCHAR (12) DEFAULT NULL
+    /* Falta PK y FK */
+);
