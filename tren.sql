@@ -62,7 +62,7 @@ CREATE TABLE RUTA (
 );
 
 CREATE TABLE TRANSPORTE (
-  id_tran INT PRIMARY KEY,
+  id_transporte INT PRIMARY KEY,
   clase VARCHAR(20),
   cantidad INT,
   aforo INT
@@ -74,9 +74,9 @@ CREATE TABLE HORARIO (
   fecha_salida DATE,
   hora_salida TIME,
   id_ruta INT,
-  id_tran INT,
+  id_transporte INT,
   FOREIGN KEY (id_ruta) REFERENCES RUTA(id_ruta),
-  FOREIGN KEY (id_tran) REFERENCES TRANSPORTE(id_tran)
+  FOREIGN KEY (id_transporte) REFERENCES TRANSPORTE(id_transporte)
 );
 
 CREATE TABLE RESERVA (
@@ -114,17 +114,19 @@ CREATE TABLE PASAJEROS_SECUNDARIOS (
 
 CREATE TABLE ATIENDE (
   id_empleado INT,
-  id_tran INT,
-  PRIMARY KEY (id_empleado, id_tran),
+  id_transporte INT,
+  PRIMARY KEY (id_empleado, id_transporte),
   FOREIGN KEY (id_empleado) REFERENCES TRIPULANTE_DE_CABINA(id_empleado),
-  FOREIGN KEY (id_tran) REFERENCES TRANSPORTE(id_tran)
+  FOREIGN KEY (id_transporte) REFERENCES TRANSPORTE(id_transporte)
 );
 
 CREATE TABLE CONDUCE (
   id_empleado INT,
-  id_tran INT,
-  PRIMARY KEY (id_empleado, id_tran),
+  id_transporte INT,
+  PRIMARY KEY (id_empleado, id_transporte),
   FOREIGN KEY (id_empleado) REFERENCES CHOFER(id_empleado),
-  FOREIGN KEY (id_tran) REFERENCES TRANSPORTE(id_tran)
+  FOREIGN KEY (id_transporte) REFERENCES TRANSPORTE(id_transporte)
 );
+
+
 
