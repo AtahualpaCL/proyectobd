@@ -183,4 +183,4 @@ CREATE TABLE TIENE (
   FOREIGN KEY (id_horario) REFERENCES HORARIO(id_horario),
   FOREIGN KEY (id_tran) REFERENCES TRANSPORTE(id_tran)
 );
-
+ef
