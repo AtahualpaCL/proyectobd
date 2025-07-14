@@ -6,7 +6,7 @@ class Modelo{
         $this->Modelo = array();
         try {
             $this->db = new PDO('mysql:host=localhost;dbname=dbtren', "root", "");
-            echo "Conexión exitosa";
+            //echo "Conexión exitosa";
         } catch (PDOException $e) {
             die("Error en la conexión: " . $e->getMessage());
         }
