@@ -89,6 +89,54 @@ class modeloController {
         require_once("vista/psecundario/nuevo.php");
     }
 
+    static function guardarPasajeroSecundario() {
+        $id_reserva = $_REQUEST['id_reserva'];
+        $tipo_secundario = $_REQUEST['tipo_secundario'];
+
+        $modelo = new Modelo();
+        $modelo->insertar("PASAJEROS_SECUNDARIOS", "id_reserva", "'$id_reserva'");
+        $id_pasajerosec = $modelo->getLastId();
+
+        if ($tipo_secundario == 'adulto') {
+            $nombres = $_REQUEST['nombres'];
+            $apellidos = $_REQUEST['apellidos'];
+            $genero = $_REQUEST['genero'];
+            $tipo_documento = $_REQUEST['tipo_documento'];
+            $numero_documento = $_REQUEST['numero_documento'];
+            $nacionalidad = $_REQUEST['nacionalidad'];
+            $fech_nac = $_REQUEST['fech_nac'];
+            $contacto_compra = $_REQUEST['contacto_compra'] ?? 0;
+
+            $cols = "id_pasajerosec, nombres, apellidos, genero, tipo_documento, numero_documento, nacionalidad, fech_nac, contacto_compra";
+            $vals = "'$id_pasajerosec', '$nombres', '$apellidos', '$genero', '$tipo_documento', '$numero_documento', '$nacionalidad', '$fech_nac', $contacto_compra";
+
+            $modelo->insertar("PS_ADULTO", $cols, $vals);
+        } elseif ($tipo_secundario == 'niño') {
+            $nombres = $_REQUEST['nombres'];
+            $apellidos = $_REQUEST['apellidos'];
+            $genero = $_REQUEST['genero'];
+            $tipo_documento = $_REQUEST['tipo_documento'];
+            $numero_documento = $_REQUEST['numero_documento'];
+            $nacionalidad = $_REQUEST['nacionalidad'];
+            $fech_nac = $_REQUEST['fech_nac'];
+
+            $cols = "id_pasajerosec, nombres, apellidos, genero, tipo_documento, numero_documento, nacionalidad, fech_nac";
+            $vals = "'$id_pasajerosec', '$nombres', '$apellidos', '$genero', '$tipo_documento', '$numero_documento', '$nacionalidad', '$fech_nac'";
+
+            $modelo->insertar("PS_NIÑO", $cols, $vals);
+        } elseif ($tipo_secundario == 'infante') {
+            $responsable = $_REQUEST['responsable'];
+
+            $cols = "id_pasajerosec, resposable";
+            $vals = "'$id_pasajerosec', '$responsable'";
+
+            $modelo->insertar("PS_INFANTE", $cols, $vals);
+        }
+
+        header("Location:".urlsite."?m=indexSecundario");
+    }
+
+
     
     //--------- CRUD DE EMPLEADO -----------
     static function indexEmpleado() {
