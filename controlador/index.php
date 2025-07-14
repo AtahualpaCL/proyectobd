@@ -2,49 +2,44 @@
 require_once("modelo/index.php");
 
 class modeloController {
-    private $model;
-
-    function __construct() {
-        $this->model = new Modelo();
-    }
-
-    static function index() {
+    // -------- CRUD de PASAJERO --------
+    static function indexPasajero() {
         $obj = new Modelo();
         $dato = $obj->mostrar("PASAJERO", "1");
-        require_once("vista/index.php");
+        require_once("vista/pasajero/index.php");
     }
 
-    static function nuevo() {
-        require_once("vista/nuevo.php");
+    static function nuevoPasajero() {
+        require_once("vista/pasajero/nuevo.php");
     }
 
-    static function guardar() {
+    static function guardarPasajero() {
         $nombres = $_REQUEST['nombres'];
         $apellidos = $_REQUEST['apellidos'];
+        $telefono = $_REQUEST['telefono'];
+        $email = $_REQUEST['email'];
         $genero = $_REQUEST['genero'];
         $tipo_documento = $_REQUEST['tipo_documento'];
         $numero_documento = $_REQUEST['numero_documento'];
-        $telefono = $_REQUEST['telefono'];
         $nacionalidad = $_REQUEST['nacionalidad'];
         $fech_nac = $_REQUEST['fech_nac'];
-        $email = $_REQUEST['email'];
         $contacto_compra = $_REQUEST['contacto_compra'];
 
         $data = "'$nombres','$apellidos','$genero','$tipo_documento','$numero_documento','$telefono','$nacionalidad','$fech_nac','$email',$contacto_compra";
 
         $pasajero = new Modelo();
         $pasajero->insertar("PASAJERO", $data);
-        header("location:".urlsite);
+        header("location:".urlsite."?m=indexPasajero");
     }
 
-    static function editar() {
+    static function editarPasajero() {
         $id = $_REQUEST['id'];
         $pasajero = new Modelo();
         $dato = $pasajero->mostrar("PASAJERO", "id_pasajero=".$id);
-        require_once("vista/editar.php");
+        require_once("vista/pasajero/editar.php");
     }
 
-    static function actualizar() {
+    static function actualizarPasajero() {
         $id = $_REQUEST['id'];
         $nombres = $_REQUEST['nombres'];
         $apellidos = $_REQUEST['apellidos'];
@@ -55,14 +50,27 @@ class modeloController {
 
         $pasajero = new Modelo();
         $pasajero->actualizar("PASAJERO", $data, "id_pasajero=".$id);
-        header("location:".urlsite);
+        header("location:".urlsite."?m=indexPasajero");
     }
 
-    static function eliminar() {
+    static function eliminarPasajero() {
         $id = $_REQUEST['id'];
         $pasajero = new Modelo();
         $pasajero->eliminar("PASAJERO", "id_pasajero=".$id);
-        header("location:".urlsite);
+        header("location:".urlsite."?m=indexPasajero");
+    }
+
+    // -------- LISTADOS --------
+    static function indexSecundario() {
+        $obj = new Modelo();
+        $dato = $obj->mostrar("PS_ADULTO", "1");
+        require_once("vista/secundario/index.php");
+    }
+
+    static function indexEmpleado() {
+        $obj = new Modelo();
+        $dato = $obj->mostrar("EMPLEADO", "1");
+        require_once("vista/empleado/index.php");
     }
 }
 ?>

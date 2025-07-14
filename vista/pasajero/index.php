@@ -1,7 +1,7 @@
 <?php require_once("vista/layout/header.php") ?>
 
 <h1>Listado de Pasajeros</h1>
-<a href="index.php?m=nuevo">Nuevo Pasajero</a>
+<a href="index.php?m=nuevoPasajero">Nuevo Pasajero</a>
 <table border="1">
     <thead>
         <tr>
@@ -9,7 +9,6 @@
             <th>Nombres</th>
             <th>Apellidos</th>
             <th>Teléfono</th>
-            <th>Email</th>
             <th>Acciones</th>
         </tr>
     </thead>
@@ -22,14 +21,18 @@
                     <td><?= $v['nombres'] ?></td>
                     <td><?= $v['apellidos'] ?></td>
                     <td><?= $v['telefono'] ?></td>
-                    <td><?= $v['email'] ?></td>
                     <td>
-                        <a href="index.php?m=editar&id=<?= $v['id_pasajero'] ?>">Editar</a>
-                        <a href="index.php?m=eliminar&id=<?= $v['id_pasajero'] ?>">Eliminar</a>
+                        <a href="index.php?m=editarPasajero&id=<?= $v['id_pasajero'] ?>">Editar</a>
+                        <a href="index.php?m=eliminarPasajero&id=<?= $v['id_pasajero'] ?>">Eliminar</a>
                     </td>
                 </tr>
         <?php endforeach; endforeach; endif; ?>
     </tbody>
 </table>
+<br>
+<form action="index.php" method="get">
+    <button type="submit">Volver al menú</button>
+</form>
+
 
 <?php require_once("vista/layout/footer.php") ?>
