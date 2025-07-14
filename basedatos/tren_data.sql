@@ -1,90 +1,92 @@
--- Insertando datos en PASAJERO
-INSERT INTO PASAJERO VALUES
-(1, 'Carlos', 'Perez', 'M', '987654321', 'Peruana', 'carlos.perez@mail.com'),
-(2, 'Ana', 'Torres', 'F', '923456789', 'Chilena', 'ana.torres@mail.com');
+-- 1. PASAJERO
+INSERT INTO PASAJERO (nombres, apellidos, genero, tipo_documento, numero_documento, telefono, nacionalidad, fech_nac, email, contacto_compra)
+VALUES 
+('Carlos', 'Perez', 'M', 'DNI', '987654321', '999111222', 'Peruana', '1990-05-10', 'carlos.perez@mail.com', TRUE),
+('Ana', 'Torres', 'F', 'DNI', '923456789', '988222333', 'Chilena', '1992-08-25', 'ana.torres@mail.com', FALSE),
+('Luis', 'Ramirez', 'M', 'Pasaporte', 'P1234567', '987333444', 'Argentina', '1985-11-30', 'luis.ramirez@mail.com', TRUE);
 
--- PASAJERO_CORRIENTE
+-- 2. PASAJERO_CORRIENTE
 INSERT INTO PASAJERO_CORRIENTE VALUES
 (1);
 
--- PASAJERO_EMPRESA
+-- 3. PASAJERO_EMPRESA
 INSERT INTO PASAJERO_EMPRESA VALUES
-(2, '20123456789', 'Av. Los Héroes 123', 'Empresa Torres SAC');
+(2, '20456789012', 'Av. Los Empresarios 123', 'Transporte Torres SAC');
 
-<<<<<<< HEAD
--- EMPLEADO
-INSERT INTO EMPLEADO VALUES
-(1, 'Jose', 'Martinez', '12345678', '1980-05-20', 'jose.martinez@mail.com', 44),
-(2,  'Maria', 'Lopez', '87654321', '1990-08-15', 'maria.lopez@mail.com', 33),
-(3,  'Luis', 'Gomez', '11223344', '1985-12-30', 'luis.gomez@mail.com', 39);
+-- 4. EMPLEADO
+INSERT INTO EMPLEADO (nombre, apellido, documento, fech_nac, correo, edad)
+VALUES 
+('Jose', 'Martinez', '12345678', '1980-05-20', 'jose.martinez@mail.com', 44),
+('Maria', 'Lopez', '87654321', '1990-08-15', 'maria.lopez@mail.com', 33),
+('Elena', 'Gomez', '11223344', '1985-12-30', 'elena.gomez@mail.com', 39),
+('Pedro', 'Cruz', '44556677', '1988-02-10', 'pedro.cruz@mail.com', 36);
 
--- ASESOR
+-- 5. ASESOR, CHOFER, TRIPULANTE_DE_CABINA
 INSERT INTO ASESOR VALUES
-(1, 'Estacion Lima');
-
--- CHOFER
+(1, 'Estación Central');
 INSERT INTO CHOFER VALUES
-(2, 'LIC12345');
-
--- TRIPULANTE_DE_CABINA
+(2, 'LIC123456');
 INSERT INTO TRIPULANTE_DE_CABINA VALUES
-(3);
+(3),
+(4);
 
--- RUTA
-INSERT INTO RUTA VALUES
-(1, 'Lima', 'Arequipa', '10:00:00', 'Español, Inglés');
+-- 6. RUTA
+INSERT INTO RUTA (ciudad_origen, ciudad_destino, estacion_origen, estacion_destino)
+VALUES 
+('Lima', 'Cusco', 'Estación Lima', 'Estación Cusco'),
+('Arequipa', 'Tacna', 'Estación Arequipa', 'Estación Tacna');
 
--- TRANSPORTE
-INSERT INTO TRANSPORTE VALUES
-(1, 'Turista', 50, 50);
-=======
--- ASESOR, CHOFER, TRIPULANTE
-INSERT INTO ASESOR VALUES (101, 'Estación A');
-INSERT INTO CHOFER VALUES (102, 'LIC987654');
-INSERT INTO TRIPULANTE_DE_CABINA VALUES (103, 'Español');
-INSERT INTO TRIPULANTE_DE_CABINA VALUES (104,  'Frances');
+-- 7. CLASE
+INSERT INTO CLASE (clase, precio_clase, servicios)
+VALUES 
+('Económica', 100.00, 'WiFi, Aire Acondicionado'),
+('Turista', 180.00, 'WiFi, Comida, Aire Acondicionado');
 
--- RUTAS
-INSERT INTO RUTA VALUES 
-(1, 'Lima', 'Cusco', '01:30:00'),
-(2, 'Arequipa', 'Tacna', '02:45:00');
+-- 8. TRANSPORTE
+INSERT INTO TRANSPORTE (id_clase, aforo)
+VALUES 
+(1, 50),
+(2, 40);
 
--- TRANSPORTE
-INSERT INTO TRANSPORTE VALUES 
-(1, 'Vistandome', 'Bus', 40),
-(2, 'Observatory', 'Bus y tren', 25);
->>>>>>> 4001532ef7a0ece6f5f7115afb1a2581031d44ef
+-- 9. HORARIO
+INSERT INTO HORARIO (tipo, hora_salida, hora_llegada, duracion_viaje, id_ruta)
+VALUES 
+('Directo', '08:00:00', '12:00:00', '04:00:00', 1),
+('Escala', '09:30:00', '14:15:00', '04:45:00', 2);
 
--- HORARIO
-INSERT INTO HORARIO VALUES
-(1, 'Directo', '2025-07-20', '08:00:00', 1, 1);
+-- 10. PAGO
+INSERT INTO PAGO (metodo_pago, fecha_pago, monto)
+VALUES 
+('Tarjeta', '2025-07-10', 180.00),
+('Efectivo', '2025-07-11', 360.00);
 
--- RESERVA
-INSERT INTO RESERVA VALUES
-(1, 'Ida', '2025-07-10', 'Confirmado', 150.00, 1, 1),
-(2, 'Ida y vuelta', '2025-07-11', 'Pendiente', 300.00, 2, 1);
+-- 11. RESERVA
+INSERT INTO RESERVA (tipo_viaje, tipo_transporte, fecha_reserva, fecha_salida, fecha_retorno, id_pasajero, id_horario, id_pago)
+VALUES 
+('Ida', 'Bus y Tren', '2025-07-05', '2025-07-10', NULL, 1, 1, 1),
+('Ida y vuelta', 'Bus', '2025-07-06', '2025-07-12', '2025-07-18', 2, 2, 2);
 
--- RESERVA_FISICA
+-- 12. RESERVA_FISICA, RESERVA_VIRTUAL
 INSERT INTO RESERVA_FISICA VALUES
 (1, 1);
-
--- RESERVA_VIRTUAL
 INSERT INTO RESERVA_VIRTUAL VALUES
 (2);
 
--- PAGO
-INSERT INTO PAGO VALUES
-(1, 'Tarjeta', '2025-07-12', 150.00, 1),
-(2, 'Efectivo', '2025-07-13', 300.00, 2);
+-- 13. PASAJEROS_SECUNDARIOS y PS_ADULTO
+INSERT INTO PASAJEROS_SECUNDARIOS (id_reserva) VALUES
+(2);
+INSERT INTO PS_ADULTO (id_pasajerosec, nombres, apellidos, genero, tipo_documento, numero_documento, nacionalidad, fech_nac, contacto_compra)
+VALUES 
+(1, 'Laura', 'Fernandez', 'F', 'DNI', '45678912', 'Peruana', '1994-07-20', TRUE);
 
--- PASAJEROS_SECUNDARIOS
-INSERT INTO PASAJEROS_SECUNDARIOS VALUES
-(1, 'Pedro', 'Juan', 'M', 2);
-
--- ATIENDE
+-- 14. ATIENDE, CONDUCE
 INSERT INTO ATIENDE VALUES
-(3, 1);
-
--- CONDUCE
+(3, 1),
+(4, 2);
 INSERT INTO CONDUCE VALUES
 (2, 1);
+
+-- 15. TIENE
+INSERT INTO TIENE VALUES
+(1, 1),
+(2, 2);
