@@ -1,6 +1,6 @@
 <?php require_once("vista/layout/header.php") ?>
 
-<h1>Nuevo Pasajero</h1>
+<h1>Nuevo Pasajero Secundario</h1>
 <form action="" method="get">
     <label>Nombres:</label><br>
     <input type="text" name="nombres" required><br>
@@ -24,10 +24,6 @@
 
     <label>Número de Documento:</label><br>
     <input type="text" name="numero_documento" required><br>
-
-
-    <label>Teléfono:</label><br>
-    <input type="text" name="telefono" required><br>
 
     <label>Nacionalidad:</label><br>
     <select name="nacionalidad" required>
@@ -75,20 +71,11 @@
     <label>Fecha de Nacimiento:</label><br>
     <input type="date" name="fech_nac" required><br>
 
-    <label>Email:</label><br>
-    <input type="email" name="email" required><br>
-
-    <label>Contacto de Compra:</label><br>
-    <input type="number" name="contacto_compra" min="0" max="1"><br><br>
+    <label>¿Es contacto de compra?</label><br>
+    <input type="checkbox" name="contacto_compra" value="1"> Sí<br><br>
 
     <input type="submit" value="Guardar">
-    <input type="hidden" name="m" value="guardarPasajero">
+    <input type="hidden" name="m" value="guardarPasajeroSecundario">
 </form>
-<script>
-    function mostrarCamposEmpresa() {
-        const tipo = document.getElementById('tipo_pasajero').value;
-        const datosEmpresa = document.getElementById('datos_empresa');
-        datosEmpresa.style.display = (tipo === 'empresa') ? 'block' : 'none';
-    }
-</script>
+
 <?php require_once("vista/layout/footer.php") ?>
