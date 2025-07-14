@@ -1,6 +1,6 @@
 <?php require_once("vista/layout/header.php") ?>
 
-<h1>Nuevo Pasajero</h1>
+<h1>Nuevo Pasajero Secundario</h1>
 <form action="" method="get">
     <label>Nombres:</label><br>
     <input type="text" name="nombres" required><br>
@@ -24,10 +24,6 @@
 
     <label>Número de Documento:</label><br>
     <input type="text" name="numero_documento" required><br>
-
-
-    <label>Teléfono:</label><br>
-    <input type="text" name="telefono" required><br>
 
     <label>Nacionalidad:</label><br>
     <select name="nacionalidad" required>
@@ -75,14 +71,11 @@
     <label>Fecha de Nacimiento:</label><br>
     <input type="date" name="fech_nac" required><br>
 
-    <label>Email:</label><br>
-    <input type="email" name="email" required><br>
-
     <label>¿Es contacto de compra?</label><br>
     <input type="checkbox" name="contacto_compra" value="1"> Sí<br><br>
 
     <input type="submit" value="Guardar">
-    <input type="hidden" name="m" value="guardarPasajero">
+    <input type="hidden" name="m" value="guardarPasajeroSecundario">
 </form>
 
 <?php require_once("vista/layout/footer.php") ?>
