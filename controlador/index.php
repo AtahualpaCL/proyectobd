@@ -5,7 +5,7 @@ class modeloController {
     // -------- CRUD de PASAJERO --------
     static function indexPasajero() {
         $obj = new Modelo();
-        $dato = $obj->mostrar("PASAJERO", "1");
+        $dato = $obj->mostrar("PASAJERO", "100");
         require_once("vista/pasajero/index.php");
     }
 
@@ -60,13 +60,13 @@ class modeloController {
         header("location:".urlsite."?m=indexPasajero");
     }
 
-    // -------- LISTADOS --------
+    // -------- CRUD DE PASAJERO SECUNDARIO --------
     static function indexSecundario() {
         $obj = new Modelo();
         $dato = $obj->mostrar("PS_ADULTO", "1");
         require_once("vista/secundario/index.php");
     }
-
+    //--------- CRUD DE EMPLEADO -----------
     static function indexEmpleado() {
         $obj = new Modelo();
         $dato = $obj->mostrar("EMPLEADO", "1");

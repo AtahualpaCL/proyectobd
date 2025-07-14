@@ -33,7 +33,7 @@
     <input type="number" name="contacto_compra" min="0" max="1"><br><br>
 
     <input type="submit" value="Guardar">
-    <input type="hidden" name="m" value="guardar">
+    <input type="hidden" name="m" value="guardarPasajero">
 </form>
 
 <?php require_once("vista/layout/footer.php") ?>
