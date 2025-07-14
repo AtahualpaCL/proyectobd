@@ -31,9 +31,33 @@
 
     <label>Contacto de Compra:</label><br>
     <input type="number" name="contacto_compra" min="0" max="1"><br><br>
+    
+    <label>Tipo de Pasajero:</label>
+    <select name="tipo_pasajero" id="tipo_pasajero" required onchange="mostrarCamposEmpresa()">
+        <option value="corriente">Corriente</option>
+        <option value="empresa">Empresa</option>
+    </select><br>
+
+    <div id="datos_empresa" style="display:none;">
+        <label>RUC:</label>
+        <input type="text" name="ruc"><br>
+
+        <label>Dirección:</label>
+        <input type="text" name="direccion"><br>
+
+        <label>Razón Social:</label>
+        <input type="text" name="razon_social"><br>
+    </div>
+
 
     <input type="submit" value="Guardar">
     <input type="hidden" name="m" value="guardarPasajero">
 </form>
-
+<script>
+    function mostrarCamposEmpresa() {
+        const tipo = document.getElementById('tipo_pasajero').value;
+        const datosEmpresa = document.getElementById('datos_empresa');
+        datosEmpresa.style.display = (tipo === 'empresa') ? 'block' : 'none';
+    }
+</script>
 <?php require_once("vista/layout/footer.php") ?>
