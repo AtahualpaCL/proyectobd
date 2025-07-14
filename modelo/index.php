@@ -2,8 +2,10 @@
 class Modelo{
 	private $Modelo;
 	private $db;
+    private $registros = [];
     public function __construct(){
         $this->Modelo = array();
+        $this->registros = [];
         try {
             $this->db = new PDO('mysql:host=localhost;dbname=dbtren', "root", "");
             //echo "Conexión exitosa";

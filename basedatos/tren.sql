@@ -2,185 +2,205 @@ CREATE DATABASE DBTREN;
 USE DBTREN;
 
 CREATE TABLE PASAJERO (
-  id_pasajero INT PRIMARY KEY,
-  nombres VARCHAR(50),
-  apellidos VARCHAR(50),
-  genero CHAR(1),
-  tipo_documento char(50),
-  numero_documento char(50),
-  telefono VARCHAR(20),
-  nacionalidad VARCHAR(50),
-  fech_nac DATE,
-  email VARCHAR(100),
-  contacto_compra BOOL
+  id_pasajero INT AUTO_INCREMENT PRIMARY KEY,
+  nombres VARCHAR(50) NOT NULL,
+  apellidos VARCHAR(50) NOT NULL,
+  genero CHAR(1) NOT NULL,
+  tipo_documento CHAR(50) NOT NULL,
+  numero_documento CHAR(50) NOT NULL,
+  telefono VARCHAR(20) DEFAULT NULL,
+  nacionalidad VARCHAR(50) NOT NULL,
+  fech_nac DATE NOT NULL,
+  email VARCHAR(100) DEFAULT NULL,
+  contacto_compra BOOL DEFAULT NULL
 );
 
 CREATE TABLE PASAJERO_CORRIENTE (
   id_pasajero INT PRIMARY KEY,
   FOREIGN KEY (id_pasajero) REFERENCES PASAJERO(id_pasajero)
+    ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE PASAJERO_EMPRESA (
   id_pasajero INT PRIMARY KEY,
-  RUC VARCHAR(20),
-  direccion VARCHAR(100),
-  razonSocial VARCHAR(100),
+  RUC VARCHAR(20) NOT NULL,
+  direccion VARCHAR(100) NOT NULL,
+  razonSocial VARCHAR(100) NOT NULL,
   FOREIGN KEY (id_pasajero) REFERENCES PASAJERO(id_pasajero)
+    ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE EMPLEADO (
-  id_empleado INT PRIMARY KEY,
-  nombre VARCHAR(50),
-  apellido VARCHAR(50),
-  documento VARCHAR(30),
-  fech_nac DATE,
-  correo VARCHAR(100),
-  edad INT
+  id_empleado INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(50) NOT NULL,
+  apellido VARCHAR(50) NOT NULL,
+  documento VARCHAR(30) NOT NULL,
+  fech_nac DATE NOT NULL,
+  correo VARCHAR(100) DEFAULT NULL,
+  edad INT DEFAULT NULL
 );
 
 CREATE TABLE ASESOR (
   id_empleado INT PRIMARY KEY,
-  estacionTrabajo VARCHAR(50),
+  estacionTrabajo VARCHAR(50) NOT NULL,
   FOREIGN KEY (id_empleado) REFERENCES EMPLEADO(id_empleado)
+    ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE CHOFER (
   id_empleado INT PRIMARY KEY,
-  licencia VARCHAR(30),
+  licencia VARCHAR(30) NOT NULL,
   FOREIGN KEY (id_empleado) REFERENCES EMPLEADO(id_empleado)
+    ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE TRIPULANTE_DE_CABINA (
   id_empleado INT PRIMARY KEY,
   FOREIGN KEY (id_empleado) REFERENCES EMPLEADO(id_empleado)
+    ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE RUTA (
-  id_ruta INT PRIMARY KEY,
-  ciudad_origen VARCHAR(50),
-  ciudad_destino VARCHAR(50),
-  estacion_origen VARCHAR(50),
-  estacion_destino VARCHAR(50)
+  id_ruta INT AUTO_INCREMENT PRIMARY KEY,
+  ciudad_origen VARCHAR(50) NOT NULL,
+  ciudad_destino VARCHAR(50) NOT NULL,
+  estacion_origen VARCHAR(50) NOT NULL,
+  estacion_destino VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE CLASE (
-  id_clase INT PRIMARY KEY,
-  clase VARCHAR(50) UNIQUE,
-  precio_clase DECIMAL(10,2),
-  servicios VARCHAR(100)
+  id_clase INT AUTO_INCREMENT PRIMARY KEY,
+  clase VARCHAR(50) UNIQUE NOT NULL,
+  precio_clase DECIMAL(10,2) NOT NULL,
+  servicios VARCHAR(100) DEFAULT NULL
 );
 
 CREATE TABLE TRANSPORTE (
-  id_tran INT PRIMARY KEY,
-  id_clase INT,
-  aforo INT,
-  FOREIGN KEY (id_clase) REFERENCES clase(id_clase)
+  id_tran INT AUTO_INCREMENT PRIMARY KEY,
+  id_clase INT NOT NULL,
+  aforo INT NOT NULL,
+  FOREIGN KEY (id_clase) REFERENCES CLASE(id_clase)
+    ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-
 CREATE TABLE HORARIO (
-  id_horario INT PRIMARY KEY,
-  tipo VARCHAR(30),
-  hora_salida TIME,
-  hora_llegada TIME,
-  duracion_viaje TIME,
-  id_ruta INT,
+  id_horario INT AUTO_INCREMENT PRIMARY KEY,
+  tipo VARCHAR(30) NOT NULL,
+  hora_salida TIME NOT NULL,
+  hora_llegada TIME NOT NULL,
+  duracion_viaje TIME NOT NULL,
+  id_ruta INT NOT NULL,
   FOREIGN KEY (id_ruta) REFERENCES RUTA(id_ruta)
+    ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE PAGO (
-  id_pago INT PRIMARY KEY,
-  metodo_pago VARCHAR(50),
-  fecha_pago DATE,
-  monto DECIMAL(10,2)
+  id_pago INT AUTO_INCREMENT PRIMARY KEY,
+  metodo_pago VARCHAR(50) NOT NULL,
+  fecha_pago DATE NOT NULL,
+  monto DECIMAL(10,2) NOT NULL
 );
 
 CREATE TABLE RESERVA (
-  id_reserva INT PRIMARY KEY,
-  tipo_viaje VARCHAR(50),
-  tipo_transporte VARCHAR(50),
-  fecha_reserva DATE,
-  fecha_salida DATE,
-  fecha_retorno DATE,
-  id_pasajero INT,
-  id_horario INT,
-  id_pago INT UNIQUE,
-  FOREIGN KEY (id_pasajero) REFERENCES PASAJERO(id_pasajero),
-  FOREIGN KEY (id_horario) REFERENCES HORARIO(id_horario),
+  id_reserva INT AUTO_INCREMENT PRIMARY KEY,
+  tipo_viaje VARCHAR(50) NOT NULL,
+  tipo_transporte VARCHAR(50) NOT NULL,
+  fecha_reserva DATE NOT NULL,
+  fecha_salida DATE DEFAULT NULL,
+  fecha_retorno DATE DEFAULT NULL,
+  id_pasajero INT NOT NULL,
+  id_horario INT NOT NULL,
+  id_pago INT UNIQUE NOT NULL,
+  FOREIGN KEY (id_pasajero) REFERENCES PASAJERO(id_pasajero)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (id_horario) REFERENCES HORARIO(id_horario)
+    ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (id_pago) REFERENCES PAGO(id_pago)
+    ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-
 CREATE TABLE RESERVA_FISICA (
- id_reserva INT PRIMARY KEY,
- id_asesor INT,
- FOREIGN KEY (id_reserva) REFERENCES RESERVA(id_reserva),
- FOREIGN KEY (id_asesor) REFERENCES ASESOR(id_empleado)
+  id_reserva INT PRIMARY KEY,
+  id_asesor INT NOT NULL,
+  FOREIGN KEY (id_reserva) REFERENCES RESERVA(id_reserva)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (id_asesor) REFERENCES ASESOR(id_empleado)
+    ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE RESERVA_VIRTUAL(
- id_reserva INT PRIMARY KEY,
- FOREIGN KEY (id_reserva) REFERENCES RESERVA(id_reserva)
+  id_reserva INT PRIMARY KEY,
+  FOREIGN KEY (id_reserva) REFERENCES RESERVA(id_reserva)
+    ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE PASAJEROS_SECUNDARIOS (
-  id_pasajerosec INT PRIMARY KEY,
-  id_reserva INT,
+  id_pasajerosec INT AUTO_INCREMENT PRIMARY KEY,
+  id_reserva INT NOT NULL,
   FOREIGN KEY (id_reserva) REFERENCES RESERVA(id_reserva)
+    ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE PS_ADULTO (
   id_pasajerosec INT PRIMARY KEY,
-  nombres VARCHAR(50),
-  apellidos VARCHAR(50),
-  genero CHAR(1),
-  tipo_documento char(50),
-  numero_documento char(50),
-  nacionalidad VARCHAR(50),
-  fech_nac DATE,
-  contacto_compra BOOL,
-  FOREIGN KEY (id_pasajerosec) REFERENCES PASAJEROS_SECUNDARIOS (id_pasajerosec)
+  nombres VARCHAR(50) NOT NULL,
+  apellidos VARCHAR(50) NOT NULL,
+  genero CHAR(1) NOT NULL,
+  tipo_documento CHAR(50) NOT NULL,
+  numero_documento CHAR(50) NOT NULL,
+  nacionalidad VARCHAR(50) NOT NULL,
+  fech_nac DATE NOT NULL,
+  contacto_compra BOOL DEFAULT NULL,
+  FOREIGN KEY (id_pasajerosec) REFERENCES PASAJEROS_SECUNDARIOS(id_pasajerosec)
+    ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE PS_NIÑO (
   id_pasajerosec INT PRIMARY KEY,
-  nombres VARCHAR(50),
-  apellidos VARCHAR(50),
-  genero CHAR(1),
-  tipo_documento char(50),
-  numero_documento char(50),
-  nacionalidad VARCHAR(50),
-  fech_nac date,
-  FOREIGN KEY (id_pasajerosec) REFERENCES PASAJEROS_SECUNDARIOS (id_pasajerosec)
+  nombres VARCHAR(50) NOT NULL,
+  apellidos VARCHAR(50) NOT NULL,
+  genero CHAR(1) NOT NULL,
+  tipo_documento CHAR(50) NOT NULL,
+  numero_documento CHAR(50) NOT NULL,
+  nacionalidad VARCHAR(50) NOT NULL,
+  fech_nac DATE NOT NULL,
+  FOREIGN KEY (id_pasajerosec) REFERENCES PASAJEROS_SECUNDARIOS(id_pasajerosec)
+    ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE PS_INFANTE (
   id_pasajerosec INT PRIMARY KEY,
-  resposable CHAR(50),
-  FOREIGN KEY (id_pasajerosec) REFERENCES PASAJEROS_SECUNDARIOS (id_pasajerosec)
+  resposable CHAR(50) NOT NULL,
+  FOREIGN KEY (id_pasajerosec) REFERENCES PASAJEROS_SECUNDARIOS(id_pasajerosec)
+    ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE ATIENDE (
   id_empleado INT,
   id_tran INT,
   PRIMARY KEY (id_empleado, id_tran),
-  FOREIGN KEY (id_empleado) REFERENCES TRIPULANTE_DE_CABINA(id_empleado),
+  FOREIGN KEY (id_empleado) REFERENCES TRIPULANTE_DE_CABINA(id_empleado)
+    ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (id_tran) REFERENCES TRANSPORTE(id_tran)
+    ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE CONDUCE (
   id_empleado INT,
   id_tran INT,
   PRIMARY KEY (id_empleado, id_tran),
-  FOREIGN KEY (id_empleado) REFERENCES CHOFER(id_empleado),
+  FOREIGN KEY (id_empleado) REFERENCES CHOFER(id_empleado)
+    ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (id_tran) REFERENCES TRANSPORTE(id_tran)
+    ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE TIENE (
   id_tran INT,
   id_horario INT,
   PRIMARY KEY (id_horario, id_tran),
-  FOREIGN KEY (id_horario) REFERENCES HORARIO(id_horario),
+  FOREIGN KEY (id_horario) REFERENCES HORARIO(id_horario)
+    ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (id_tran) REFERENCES TRANSPORTE(id_tran)
+    ON DELETE CASCADE ON UPDATE CASCADE
 );
-ef
