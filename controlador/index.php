@@ -5,7 +5,7 @@ class modeloController {
     // -------- CRUD de PASAJERO --------
     static function indexPasajero() {
         $obj = new Modelo();
-        $dato = $obj->mostrar("PASAJERO", "100");
+        $dato = $obj->mostrar("PASAJERO", "1");
         require_once("vista/pasajero/index.php");
     }
 
@@ -24,11 +24,29 @@ class modeloController {
         $nacionalidad = $_REQUEST['nacionalidad'];
         $fech_nac = $_REQUEST['fech_nac'];
         $contacto_compra = $_REQUEST['contacto_compra'];
-
-        $data = "'$nombres','$apellidos','$genero','$tipo_documento','$numero_documento','$telefono','$nacionalidad','$fech_nac','$email',$contacto_compra";
+        $tipo_pasajero = $_REQUEST['tipo_pasajero'];
 
         $pasajero = new Modelo();
-        $pasajero->insertar("PASAJERO", $data);
+
+        $columnas = "nombres, apellidos, genero, tipo_documento, numero_documento, telefono, nacionalidad, fech_nac, email, contacto_compra";
+        $valores = "'$nombres','$apellidos','$genero','$tipo_documento','$numero_documento','$telefono','$nacionalidad','$fech_nac','$email',$contacto_compra";
+
+        $pasajero->insertar("PASAJERO", $columnas, $valores);
+
+        $id_pasajero = $pasajero->getLastId();
+
+        if ($tipo_pasajero == 'corriente') {
+            $pasajero->insertar("PASAJERO_CORRIENTE", "id_pasajero", "'$id_pasajero'");
+        } elseif ($tipo_pasajero == 'empresa') {
+            $ruc = $_REQUEST['ruc'] ?? '';
+            $direccion = $_REQUEST['direccion'] ?? '';
+            $razon_social = $_REQUEST['razon_social'] ?? '';
+
+            $columnasEmpresa = "id_pasajero, RUC, direccion, razonSocial";
+            $valoresEmpresa = "'$id_pasajero', '$ruc', '$direccion', '$razon_social'";
+            $pasajero->insertar("PASAJERO_EMPRESA", $columnasEmpresa, $valoresEmpresa);
+        }
+
         header("location:".urlsite."?m=indexPasajero");
     }
 
@@ -64,8 +82,14 @@ class modeloController {
     static function indexSecundario() {
         $obj = new Modelo();
         $dato = $obj->mostrar("PS_ADULTO", "1");
-        require_once("vista/secundario/index.php");
+        require_once("vista/psecundario/index.php");
     }
+
+    static function nuevoPasajeroSecundario() {
+        require_once("vista/psecundario/nuevo.php");
+    }
+
+    
     //--------- CRUD DE EMPLEADO -----------
     static function indexEmpleado() {
         $obj = new Modelo();

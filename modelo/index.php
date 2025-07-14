@@ -14,13 +14,11 @@ class Modelo{
         }
     }
 
-	public function insertar($tabla,$data){
-		$consulta="insert into ".$tabla." values(null,".$data.")";
-		//echo $consulta;
-		$resultado=$this->db->query($consulta);
-		if($resultado){
-		return true; }
-		else {return false;}
+	public function insertar($tabla, $columnas, $valores) {
+		$consulta = "INSERT INTO $tabla ($columnas) VALUES ($valores)";
+		echo "<br>$consulta<br>";
+		$resultado = $this->db->query($consulta);
+		return $resultado ? true : false;
 	}
 
 	public function mostrar($tabla,$condicion){
@@ -49,6 +47,9 @@ class Modelo{
 		if($resultado){
 		return true; }
 		else {return false;}
+	}
+	public function getLastId() {
+    return $this->db->lastInsertId();
 	}
 
 }

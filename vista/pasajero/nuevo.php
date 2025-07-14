@@ -83,5 +83,11 @@
     <input type="submit" value="Guardar">
     <input type="hidden" name="m" value="guardarPasajero">
 </form>
-
+<script>
+    function mostrarCamposEmpresa() {
+        const tipo = document.getElementById('tipo_pasajero').value;
+        const datosEmpresa = document.getElementById('datos_empresa');
+        datosEmpresa.style.display = (tipo === 'empresa') ? 'block' : 'none';
+    }
+</script>
 <?php require_once("vista/layout/footer.php") ?>
