@@ -6,13 +6,13 @@
     <input type="text" name="nombres" required><br>
 
     <label>Apellidos:</label><br>
-    <input type="text" name="apellidos" required><br>
+    <input type="text" name="apellidos" required><br><br>
 
     <label>Género:</label><br>
     <span style="color: black;">Seleccione género</span><br>
 
     <input type="radio" name="genero" value="M" required> Masculino<br>
-    <input type="radio" name="genero" value="F"> Femenino<br>
+    <input type="radio" name="genero" value="F"> Femenino<br><br>
 
     <label>Tipo de Documento:</label><br>
     <select name="tipo_documento" required>
@@ -23,7 +23,7 @@
     </select><br><br>
 
     <label>Número de Documento:</label><br>
-    <input type="text" name="numero_documento" required><br>
+    <input type="text" name="numero_documento" required><br><br>
 
     <label>Nacionalidad:</label><br>
     <select name="nacionalidad" required>
@@ -66,10 +66,10 @@
         <option value="Suiza">Suiza</option>
         <option value="Uruguay">Uruguay</option>
         <option value="Venezuela">Venezuela</option>
-    </select><br>
+    </select><br><br>
 
     <label>Fecha de Nacimiento:</label><br>
-    <input type="date" name="fech_nac" required><br>
+    <input type="date" name="fech_nac" required><br><br>
 
     <label>¿Es contacto de compra?</label><br>
     <input type="checkbox" name="contacto_compra" value="1"> Sí<br><br>
