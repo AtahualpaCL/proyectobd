@@ -21,15 +21,12 @@ class Modelo{
 		return $resultado ? true : false;
 	}
 
-	public function mostrar($tabla,$condicion){
-		$consulta="select * from ".$tabla." where ".$condicion.";";
-		//echo $consulta;
-		$resultado=$this->db->query($consulta);
-		while($filas= $resultado->FETCHALL(PDO::FETCH_ASSOC)){
-			$this->registros[]=$filas;
-		}
-		return $this->registros;
+	public function mostrar($tabla, $condicion) {
+		$consulta = "SELECT * FROM $tabla WHERE $condicion;";
+		$resultado = $this->db->query($consulta);
+		return $resultado->fetchAll(PDO::FETCH_ASSOC);
 	}
+
 
 	public function actualizar($tabla,$data,$condicion){
 		$consulta="update ".$tabla." set ".$data." where ".$condicion.";";
@@ -51,6 +48,20 @@ class Modelo{
 	public function getLastId() {
     return $this->db->lastInsertId();
 	}
+
+    public function consulta($sql) {
+        $resultado = $this->db->query($sql);
+        $datos = array();
+
+        if ($resultado) {
+            while ($fila = $resultado->fetch(PDO::FETCH_ASSOC)) {
+                $datos[] = $fila;
+            }
+        }
+
+        return $datos;
+    }
+
 
 }
 ?>

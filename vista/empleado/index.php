@@ -1,14 +1,14 @@
 <?php require_once("vista/layout/header.php") ?>
 
-<h1>Listado de Pasajeros</h1>
-<a href="index.php?m=nuevoPasajero">Nuevo Pasajero</a>
+<h1>Listado de Empleados</h1>
+<a href="index.php?m=nuevoEmpleado">Nuevo Empleado</a>
 <table border="1">
     <thead>
         <tr>
             <th>ID</th>
             <th>Nombres</th>
             <th>Apellidos</th>
-            <th>Teléfono</th>
+            <th>Edad</th>
             <th>Acciones</th>
         </tr>
     </thead>
@@ -16,13 +16,13 @@
         <?php if (!empty($dato)): ?>
             <?php foreach ($dato as $v): ?>
                 <tr>
-                    <td><?= $v['id_pasajero'] ?></td>
-                    <td><?= $v['nombres'] ?></td>
-                    <td><?= $v['apellidos'] ?></td>
-                    <td><?= $v['telefono'] ?></td>
+                    <td><?= $v['id_empleado'] ?></td>
+                    <td><?= $v['nombre'] ?></td>
+                    <td><?= $v['apellido'] ?></td>
+                    <td><?= $v['edad'] ?></td>
                     <td>
-                        <a href="index.php?m=editarPasajero&id=<?= $v['id_pasajero'] ?>">Editar</a>
-                        <a href="index.php?m=eliminarPasajero&id=<?= $v['id_pasajero'] ?>" onclick="return confirm('¿Está seguro de eliminar?')">Eliminar</a>
+                        <a href="index.php?m=editarEmpleado&id=<?= $v['id_empleado'] ?>">Editar</a>
+                        <a href="index.php?m=eliminarEmpleado&id=<?= $v['id_empleado'] ?>" onclick="return confirm('¿Está seguro?')">Eliminar</a>
                     </td>
                 </tr>
             <?php endforeach ?>

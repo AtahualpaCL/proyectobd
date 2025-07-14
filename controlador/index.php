@@ -79,7 +79,7 @@ class modeloController {
     }
 
     // -------- CRUD DE PASAJERO SECUNDARIO --------
-    static function indexSecundario() {
+    /*static function indexSecundario() {
         $obj = new Modelo();
         $dato = $obj->mostrar("PS_ADULTO", "1");
         require_once("vista/psecundario/index.php");
@@ -134,7 +134,7 @@ class modeloController {
         }
 
         header("Location:".urlsite."?m=indexSecundario");
-    }
+    }*/
 
 
     
@@ -144,5 +144,262 @@ class modeloController {
         $dato = $obj->mostrar("EMPLEADO", "1");
         require_once("vista/empleado/index.php");
     }
+
+    static function nuevoEmpleado() {
+        require_once("vista/empleado/nuevo.php");
+    }
+
+    static function guardarEmpleado() {
+        $nombre = $_REQUEST['nombre'];
+        $apellido = $_REQUEST['apellido'];
+        $documento = $_REQUEST['documento'];
+        $fech_nac = $_REQUEST['fech_nac'];
+        $correo = $_REQUEST['correo'];
+        $edad = $_REQUEST['edad'];
+        $rol = $_REQUEST['rol']; // ASESOR, CHOFER, TRIPULANTE
+
+        $columnas = "nombre, apellido, documento, fech_nac, correo, edad";
+        $valores = "'$nombre', '$apellido', '$documento', '$fech_nac', '$correo', $edad";
+
+        $empleado = new Modelo();
+        $empleado->insertar("EMPLEADO", $columnas, $valores);
+        $id_empleado = $empleado->getLastId();
+
+        if ($rol == 'asesor') {
+            $estacion = $_REQUEST['estacion'];
+            $empleado->insertar("ASESOR", "id_empleado, estacionTrabajo", "'$id_empleado', '$estacion'");
+        } elseif ($rol == 'chofer') {
+            $licencia = $_REQUEST['licencia'];
+            $empleado->insertar("CHOFER", "id_empleado, licencia", "'$id_empleado', '$licencia'");
+        } elseif ($rol == 'tripulante') {
+            $empleado->insertar("TRIPULANTE_DE_CABINA", "id_empleado", "'$id_empleado'");
+        }
+
+        header("location:".urlsite."?m=indexEmpleado");
+    }
+
+    static function editarEmpleado() {
+        $id = $_REQUEST['id'];
+        $empleado = new Modelo();
+        $dato = $empleado->mostrar("EMPLEADO", "id_empleado=$id");
+        require_once("vista/empleado/editar.php");
+    }
+
+    static function actualizarEmpleado() {
+        $id = $_REQUEST['id'];
+        $nombre = $_REQUEST['nombre'];
+        $apellido = $_REQUEST['apellido'];
+        $documento = $_REQUEST['documento'];
+        $fech_nac = $_REQUEST['fech_nac'];
+        $correo = $_REQUEST['correo'];
+        $edad = $_REQUEST['edad'];
+
+        $data = "nombre='$nombre', apellido='$apellido', documento='$documento', fech_nac='$fech_nac', correo='$correo', edad=$edad";
+
+        $empleado = new Modelo();
+        $empleado->actualizar("EMPLEADO", $data, "id_empleado=$id");
+        header("location:".urlsite."?m=indexEmpleado");
+    }
+
+    static function eliminarEmpleado() {
+        $id = $_REQUEST['id'];
+        $empleado = new Modelo();
+        $empleado->eliminar("EMPLEADO", "id_empleado=$id");
+        header("location:".urlsite."?m=indexEmpleado");
+    }
+ 
+    // ------ CRUD DE CLASE ------
+    static function indexClase() {
+        $obj = new Modelo();
+        $dato = $obj->mostrar("CLASE", "1");
+        require_once("vista/clase/index.php");
+    }
+
+    static function nuevoClase() {
+        require_once("vista/clase/nuevo.php");
+    }
+
+    static function guardarClase() {
+        $clase = $_REQUEST['clase'];
+        $precio_clase = $_REQUEST['precio_clase'];
+        $servicios = $_REQUEST['servicios'];
+
+        $columnas = "clase, precio_clase, servicios";
+        $valores = "'$clase', $precio_clase, '$servicios'";
+
+        $obj = new Modelo();
+        $obj->insertar("CLASE", $columnas, $valores);
+
+        header("location:" . urlsite . "?m=indexClase");
+    }
+
+    static function editarClase() {
+        $id = $_REQUEST['id'];
+        $obj = new Modelo();
+        $dato = $obj->mostrar("CLASE", "id_clase=" . $id);
+        require_once("vista/clase/editar.php");
+    }
+
+    static function actualizarClase() {
+        $id = $_REQUEST['id'];
+        $clase = $_REQUEST['clase'];
+        $precio_clase = $_REQUEST['precio_clase'];
+        $servicios = $_REQUEST['servicios'];
+
+        $data = "clase='$clase', precio_clase=$precio_clase, servicios='$servicios'";
+
+        $obj = new Modelo();
+        $obj->actualizar("CLASE", $data, "id_clase=" . $id);
+
+        header("location:" . urlsite . "?m=indexClase");
+    }
+
+    static function eliminarClase() {
+        $id = $_REQUEST['id'];
+        $obj = new Modelo();
+        $obj->eliminar("CLASE", "id_clase=" . $id);
+
+        header("location:" . urlsite . "?m=indexClase");
+    }
+
+        // ------ CRUD DE TRANSPORTE ------
+    static function indexTransporte() {
+        $obj = new Modelo();
+        $dato = $obj->mostrar("TRANSPORTE", "1");
+        require_once("vista/transporte/index.php");
+    }
+
+    static function nuevoTransporte() {
+        $modelo = new Modelo();
+        $clases = $modelo->mostrar("CLASE", "1");  // Para el select de clases
+        require_once("vista/transporte/nuevo.php");
+    }
+
+    static function guardarTransporte() {
+        $id_clase = $_REQUEST['id_clase'];
+        $aforo = $_REQUEST['aforo'];
+
+        $columnas = "id_clase, aforo";
+        $valores = "$id_clase, $aforo";
+
+        $obj = new Modelo();
+        $obj->insertar("TRANSPORTE", $columnas, $valores);
+
+        header("location:" . urlsite . "?m=indexTransporte");
+    }
+
+    static function editarTransporte() {
+        $id = $_REQUEST['id'];
+        $modelo = new Modelo();
+        $dato = $modelo->mostrar("TRANSPORTE", "id_tran=" . $id);
+        $clases = $modelo->mostrar("CLASE", "1");  // Para cambiar la clase
+        require_once("vista/transporte/editar.php");
+    }
+
+    static function actualizarTransporte() {
+        $id = $_REQUEST['id'];
+        $id_clase = $_REQUEST['id_clase'];
+        $aforo = $_REQUEST['aforo'];
+
+        $data = "id_clase=$id_clase, aforo=$aforo";
+
+        $obj = new Modelo();
+        $obj->actualizar("TRANSPORTE", $data, "id_tran=" . $id);
+
+        header("location:" . urlsite . "?m=indexTransporte");
+    }
+
+    static function eliminarTransporte() {
+        $id = $_REQUEST['id'];
+        $obj = new Modelo();
+        $obj->eliminar("TRANSPORTE", "id_tran=" . $id);
+
+        header("location:" . urlsite . "?m=indexTransporte");
+    }
+
+// ----- CRUD DE CONDUCE -----
+    static function indexConduce() {
+        $modelo = new Modelo();
+        $dato = $modelo->consulta("SELECT C.id_empleado, E.nombre, E.apellido, C.id_tran 
+                                FROM CONDUCE C 
+                                JOIN EMPLEADO E ON C.id_empleado = E.id_empleado");
+        require_once("vista/conduce/index.php");
+    }
+
+    static function nuevoConduce() {
+        $modelo = new Modelo();
+        $choferes = $modelo->consulta("SELECT CH.id_empleado, E.nombre, E.apellido 
+                                    FROM CHOFER CH 
+                                    JOIN EMPLEADO E ON CH.id_empleado = E.id_empleado");
+        $transportes = $modelo->mostrar("TRANSPORTE", "1");
+        require_once("vista/conduce/nuevo.php");
+    }
+
+    static function guardarConduce() {
+        $id_empleado = $_REQUEST['id_empleado'];
+        $id_tran = $_REQUEST['id_tran'];
+
+        $columnas = "id_empleado, id_tran";
+        $valores = "$id_empleado, $id_tran";
+
+        $modelo = new Modelo();
+        $modelo->insertar("CONDUCE", $columnas, $valores);
+
+        header("location:" . urlsite . "?m=indexConduce");
+    }
+
+    static function eliminarConduce() {
+        $id_empleado = $_REQUEST['id_empleado'];
+        $id_tran = $_REQUEST['id_tran'];
+
+        $modelo = new Modelo();
+        $modelo->eliminar("CONDUCE", "id_empleado=$id_empleado AND id_tran=$id_tran");
+
+        header("location:" . urlsite . "?m=indexConduce");
+    }
+
+        
+    // ----- CRUD DE ATIENDE -----
+    static function indexAtiende() {
+        $modelo = new Modelo();
+        $dato = $modelo->consulta("SELECT A.id_empleado, E.nombre, E.apellido, A.id_tran 
+                                FROM ATIENDE A 
+                                JOIN EMPLEADO E ON A.id_empleado = E.id_empleado");
+        require_once("vista/atiende/index.php");
+    }
+
+    static function nuevoAtiende() {
+        $modelo = new Modelo();
+        $tripulantes = $modelo->consulta("SELECT TC.id_empleado, E.nombre, E.apellido 
+                                        FROM TRIPULANTE_DE_CABINA TC 
+                                        JOIN EMPLEADO E ON TC.id_empleado = E.id_empleado");
+        $transportes = $modelo->mostrar("TRANSPORTE", "1");
+        require_once("vista/atiende/nuevo.php");
+    }
+
+    static function guardarAtiende() {
+        $id_empleado = $_REQUEST['id_empleado'];
+        $id_tran = $_REQUEST['id_tran'];
+
+        $columnas = "id_empleado, id_tran";
+        $valores = "$id_empleado, $id_tran";
+
+        $modelo = new Modelo();
+        $modelo->insertar("ATIENDE", $columnas, $valores);
+
+        header("location:" . urlsite . "?m=indexAtiende");
+    }
+
+    static function eliminarAtiende() {
+        $id_empleado = $_REQUEST['id_empleado'];
+        $id_tran = $_REQUEST['id_tran'];
+
+        $modelo = new Modelo();
+        $modelo->eliminar("ATIENDE", "id_empleado=$id_empleado AND id_tran=$id_tran");
+
+        header("location:" . urlsite . "?m=indexAtiende");
+    }
+
+
 }
 ?>
