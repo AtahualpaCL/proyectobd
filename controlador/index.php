@@ -686,74 +686,94 @@ class modeloController {
     // Paso 4: Confirmación y pago
     static function paso4Reserva() {
         $_SESSION['reserva'] = array_merge($_SESSION['reserva'], $_REQUEST);
-
-        $reserva = $_SESSION['reserva'];
-
-        $modelo = new Modelo();
-
-        // Información del transporte y horario de IDA
-        list($id_horario_ida, $id_transporte_ida) = explode('-', $reserva['seleccion_ida']);
-        $horario_ida = $modelo->consulta("SELECT * FROM HORARIO WHERE id_horario = $id_horario_ida")[0] ?? null;
-        $transporte_ida = $modelo->consulta("SELECT t.*, c.clase FROM TRANSPORTE t 
-                                            JOIN CLASE c ON t.id_clase = c.id_clase 
-                                            WHERE t.id_tran = $id_transporte_ida")[0] ?? null;
-
-        // Información del transporte y horario de RETORNO (si existe)
-        $horario_retorno = null;
-        $transporte_retorno = null;
-        if ($reserva['tipo_viaje'] == 'ida y retorno') {
-            list($id_horario_ret, $id_transporte_ret) = explode('-', $reserva['seleccion_retorno']);
-            $horario_retorno = $modelo->consulta("SELECT * FROM HORARIO WHERE id_horario = $id_horario_ret")[0] ?? null;
-            $transporte_retorno = $modelo->consulta("SELECT t.*, c.clase FROM TRANSPORTE t 
-                                                    JOIN CLASE c ON t.id_clase = c.id_clase 
-                                                    WHERE t.id_tran = $id_transporte_ret")[0] ?? null;
-        }
-
         require_once("vista/reserva/paso4.php");
     }
 
     // Guardar todo en la base de datos
-    static function confirmarReserva() {
-        $modelo = new Modelo();
-        $reserva = $_SESSION['reserva'];
+        public function confirmarReserva() {
+        $reserva = $_SESSION['reserva'] ?? null;
 
-        // Guardar pago
-        $modelo->insertar("PAGO", "metodo_pago, fecha_pago, monto",
-            "'{$reserva['metodo_pago']}', CURDATE(), {$reserva['monto_total']}");
+        if (!$reserva) {
+            header("Location: index.php?m=paso1Reserva");
+            exit;
+        }
+
+        $modelo = new Modelo();
+        $metodo_pago = $_POST['metodo_pago'];
+        $reserva['metodo_pago'] = $metodo_pago;
+        $_SESSION['reserva'] = $reserva;
+
+        // === 1. Insertar contacto de compra en PASAJERO ===
+        $contacto = $reserva['contacto_data'];
+        $columnas = "nombres, apellidos, genero, tipo_documento, numero_documento, telefono, nacionalidad, fech_nac, email, contacto_compra";
+        $valores = "'{$contacto['nombres']}', '{$contacto['apellidos']}', '{$contacto['genero']}', '{$contacto['tipo_documento']}', 
+                    '{$contacto['numero_documento']}', '{$contacto['telefono']}', '{$contacto['nacionalidad']}', 
+                    '{$contacto['fech_nac']}', '{$contacto['email']}', 1";
+        $modelo->insertar("PASAJERO", $columnas, $valores);
+        $id_contacto = $modelo->getLastId();
+
+        // === 2. Insertar en PASAJERO_CORRIENTE o PASAJERO_EMPRESA ===
+        if (!empty($contacto['empresa'])) {
+            $empresa = $contacto['empresa'];
+            $columnas = "id_pasajero, RUC, direccion, razonSocial";
+            $valores = "$id_contacto, '{$empresa['ruc']}', '{$empresa['direccion']}', '{$empresa['razon_social']}'";
+            $modelo->insertar("PASAJERO_EMPRESA", $columnas, $valores);
+        } else {
+            $modelo->insertar("PASAJERO_CORRIENTE", "id_pasajero", "$id_contacto");
+        }
+
+        // === 3. Insertar el pago en PAGO ===
+        $fecha_pago = date('Y-m-d');
+        $columnas = "metodo_pago, fecha_pago, monto";
+        $valores = "'$metodo_pago', '$fecha_pago', {$reserva['monto_total']}";
+        $modelo->insertar("PAGO", $columnas, $valores);
         $id_pago = $modelo->getLastId();
 
-        // Guardar reserva
-        $valores_reserva = "'{$reserva['tipo_viaje']}', '{$reserva['tipo_transporte']}', CURDATE(), '{$reserva['fecha_salida']}', '{$reserva['fecha_retorno']}', {$reserva['id_pasajero']}, {$reserva['id_horario']}, $id_pago";
-
-        $modelo->insertar("RESERVA",
-            "tipo_viaje, tipo_transporte, fecha_reserva, fecha_salida, fecha_retorno, id_pasajero, id_horario, id_pago",
-            $valores_reserva);
-
+        // === 4. Insertar la RESERVA ===
+        $fecha_reserva = date('Y-m-d');
+        $fecha_retorno = !empty($reserva['fecha_retorno']) ? "'{$reserva['fecha_retorno']}'" : "NULL";
+        $columnas = "tipo_viaje, tipo_transporte, fecha_reserva, fecha_salida, fecha_retorno, id_pasajero, id_horario, id_pago";
+        $valores = "'{$reserva['tipo_viaje']}', 'Tren', '$fecha_reserva', '{$reserva['fecha_salida']}', $fecha_retorno,
+                    $id_contacto, {$reserva['id_horario']}, $id_pago";
+        $modelo->insertar("RESERVA", $columnas, $valores);
         $id_reserva = $modelo->getLastId();
 
-        if (!empty($reserva['pasajeros_secundarios'])) {
-            foreach ($reserva['pasajeros_secundarios'] as $ps) {
+        // === 5. Insertar PASAJEROS_SECUNDARIOS ===
+        foreach ($reserva['pasajeros_secundarios'] as $tipo => $grupo) {
+            foreach ($grupo as $ps) {
+                // Insertamos en PASAJEROS_SECUNDARIOS
                 $modelo->insertar("PASAJEROS_SECUNDARIOS", "id_reserva", "$id_reserva");
                 $id_ps = $modelo->getLastId();
 
-                if ($ps['tipo'] == 'adulto') {
-                    $modelo->insertar("PS_ADULTO", "id_pasajerosec, nombres, apellidos, genero, tipo_documento, numero_documento, nacionalidad, fech_nac, contacto_compra",
-                        "$id_ps, '{$ps['nombres']}', '{$ps['apellidos']}', '{$ps['genero']}', '{$ps['tipo_documento']}', '{$ps['numero_documento']}', '{$ps['nacionalidad']}', '{$ps['fech_nac']}', '{$ps['contacto_compra']}'");
-                } elseif ($ps['tipo'] == 'nino') {
-                    $modelo->insertar("PS_NIÑO", "id_pasajerosec, nombres, apellidos, genero, tipo_documento, numero_documento, nacionalidad, fech_nac",
-                        "$id_ps, '{$ps['nombres']}', '{$ps['apellidos']}', '{$ps['genero']}', '{$ps['tipo_documento']}', '{$ps['numero_documento']}', '{$ps['nacionalidad']}', '{$ps['fech_nac']}'");
-                } elseif ($ps['tipo'] == 'infante') {
-                    $modelo->insertar("PS_INFANTE", "id_pasajerosec, resposable",
-                        "$id_ps, '{$ps['responsable']}'");
+                if ($tipo == 'adulto') {
+                    $columnas = "id_pasajerosec, nombres, apellidos, genero, tipo_documento, numero_documento, nacionalidad, fech_nac, contacto_compra";
+                    $valores = "$id_ps, '{$ps['nombres']}', '{$ps['apellidos']}', '{$ps['genero']}', '{$ps['tipo_documento']}', 
+                                '{$ps['numero_documento']}', '{$ps['nacionalidad']}', '{$ps['fech_nac']}', 0";
+                    $modelo->insertar("PS_ADULTO", $columnas, $valores);
+
+                } elseif ($tipo == 'nino') {
+                    $columnas = "id_pasajerosec, nombres, apellidos, genero, tipo_documento, numero_documento, nacionalidad, fech_nac";
+                    $valores = "$id_ps, '{$ps['nombres']}', '{$ps['apellidos']}', '{$ps['genero']}', '{$ps['tipo_documento']}', 
+                                '{$ps['numero_documento']}', '{$ps['nacionalidad']}', '{$ps['fech_nac']}'";
+                    $modelo->insertar("PS_NIÑO", $columnas, $valores);
+
+                } elseif ($tipo == 'infante') {
+                    $columnas = "id_pasajerosec, resposable";
+                    $valores = "$id_ps, '{$ps['responsable']}'";
+                    $modelo->insertar("PS_INFANTE", $columnas, $valores);
                 }
             }
         }
 
+        // Limpiar la sesión de reserva
         unset($_SESSION['reserva']);
 
-        require_once("vista/reserva/confirmacion.php");
+        // Mensaje y redirección a la landing
+        echo "<script>
+            alert('¡Reserva realizada con éxito!');
+            window.location.href = 'index.php'; // Redirige a la landing page
+        </script>";
+        exit;
     }
-
-
 }
 ?>
