@@ -1,0 +1,117 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 0;
+    color: #002f6c;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 2rem;
+    color: #002f6c;
+}
+
+.boton-nuevo {
+    display: block;
+    width: fit-content;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #f8c100;
+    color: #002f6c;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.boton-nuevo:hover {
+    background-color: #ffd633;
+    transform: scale(1.05);
+}
+
+table {
+    border-collapse: collapse;
+    width: 90%;
+    max-width: 850px;
+    margin: 30px auto;
+    background-color: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 14px 20px;
+    text-align: center;
+    font-size: 0.95rem;
+}
+
+th {
+    background-color: #002f6c;
+    color: white;
+    text-transform: uppercase;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #eaf1f8;
+}
+
+/* Botones de acciones */
+.btn-editar,
+.btn-eliminar {
+    display: inline-block;
+    padding: 6px 14px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    border-radius: 6px;
+    text-decoration: none;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.btn-editar {
+    background-color: #235789;
+}
+
+.btn-editar:hover {
+    background-color: #1d456d;
+    transform: scale(1.05);
+}
+
+.btn-eliminar {
+    background-color: #d62828;
+    margin-left: 8px;
+}
+
+.btn-eliminar:hover {
+    background-color: #a61b1b;
+    transform: scale(1.05);
+}
+
+/* Botón volver */
+.boton-volver {
+    display: block;
+    width: fit-content;
+    margin: 30px auto;
+    padding: 10px 20px;
+    background-color: white;
+    color: #002f6c;
+    border: 2px solid #002f6c;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.boton-volver:hover {
+    background-color: #002f6c;
+    color: white;
+    transform: scale(1.05);
+}
