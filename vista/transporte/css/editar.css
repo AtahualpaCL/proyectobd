@@ -1,0 +1,127 @@
+/* Estilo general */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f0f0;
+    color: #002f6c;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    color: #002f6c;
+    margin-top: 30px;
+    font-size: 2rem;
+    animation: fadeInDown 0.6s ease-out;
+}
+
+form {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+    animation: fadeIn 0.8s ease;
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #002f6c;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="date"],
+select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus,
+select:focus {
+    border-color: #002f6c;
+    box-shadow: 0 0 5px rgba(0, 47, 108, 0.2);
+    outline: none;
+}
+
+/* Botones */
+.botones-form {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    gap: 15px;
+}
+
+input[type="submit"].boton-guardar {
+    flex: 1;
+    padding: 12px 0;
+    font-size: 1rem;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+    background-color: #f8c100;
+    color: #002f6c;
+    border: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+input[type="submit"].boton-guardar:hover {
+    background-color: #ffd633;
+    transform: scale(1.05);
+}
+
+button.boton-volver {
+    flex: 1;
+    padding: 12px 0;
+    font-size: 1rem;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+    background-color: white;
+    color: #002f6c;
+    border: 2px solid #002f6c;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+button.boton-volver:hover {
+    background-color: #002f6c;
+    color: white;
+    transform: scale(1.05);
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .botones-form {
+        flex-direction: column;
+    }
+
+    input[type="submit"].boton-guardar,
+    button.boton-volver {
+        width: 100%;
+    }
+}

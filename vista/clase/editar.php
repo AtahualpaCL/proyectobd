@@ -19,6 +19,7 @@
         <input type="submit" value="Guardar" class="boton-guardar">
         <a href="index.php?m=indexClase" class="boton-volver">Cancelar</a>
     </div>
+        <input type="hidden" name="m" value="editarClase">
 </form>
 
 <?php require_once("vista/layout/footer.php") ?>
