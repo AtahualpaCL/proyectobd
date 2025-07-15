@@ -687,6 +687,28 @@ class modeloController {
     static function paso4Reserva() {
         $_SESSION['reserva'] = array_merge($_SESSION['reserva'], $_REQUEST);
 
+        $reserva = $_SESSION['reserva'];
+
+        $modelo = new Modelo();
+
+        // Información del transporte y horario de IDA
+        list($id_horario_ida, $id_transporte_ida) = explode('-', $reserva['seleccion_ida']);
+        $horario_ida = $modelo->consulta("SELECT * FROM HORARIO WHERE id_horario = $id_horario_ida")[0] ?? null;
+        $transporte_ida = $modelo->consulta("SELECT t.*, c.clase FROM TRANSPORTE t 
+                                            JOIN CLASE c ON t.id_clase = c.id_clase 
+                                            WHERE t.id_tran = $id_transporte_ida")[0] ?? null;
+
+        // Información del transporte y horario de RETORNO (si existe)
+        $horario_retorno = null;
+        $transporte_retorno = null;
+        if ($reserva['tipo_viaje'] == 'ida y retorno') {
+            list($id_horario_ret, $id_transporte_ret) = explode('-', $reserva['seleccion_retorno']);
+            $horario_retorno = $modelo->consulta("SELECT * FROM HORARIO WHERE id_horario = $id_horario_ret")[0] ?? null;
+            $transporte_retorno = $modelo->consulta("SELECT t.*, c.clase FROM TRANSPORTE t 
+                                                    JOIN CLASE c ON t.id_clase = c.id_clase 
+                                                    WHERE t.id_tran = $id_transporte_ret")[0] ?? null;
+        }
+
         require_once("vista/reserva/paso4.php");
     }
 
