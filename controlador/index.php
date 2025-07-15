@@ -370,10 +370,25 @@ class modeloController {
 
     static function nuevoAtiende() {
         $modelo = new Modelo();
-        $tripulantes = $modelo->consulta("SELECT TC.id_empleado, E.nombre, E.apellido 
-                                        FROM TRIPULANTE_DE_CABINA TC 
-                                        JOIN EMPLEADO E ON TC.id_empleado = E.id_empleado");
-        $transportes = $modelo->mostrar("TRANSPORTE", "1");
+        $tripulantes_raw = $modelo->mostrar("TRIPULANTE_DE_CABINA", "1");
+        $transportes_raw = $modelo->mostrar("TRANSPORTE", "1");
+
+        // Desanidar Tripulantes
+        $tripulantes = [];
+        foreach ($tripulantes_raw as $grupo) {
+            foreach ($grupo as $t) {
+                $tripulantes[] = $t;
+            }
+        }
+
+        // Desanidar Transportes
+        $transportes = [];
+        foreach ($transportes_raw as $grupo) {
+            foreach ($grupo as $tran) {
+                $transportes[] = $tran;
+            }
+        }
+
         require_once("vista/atiende/nuevo.php");
     }
 
@@ -399,6 +414,145 @@ class modeloController {
 
         header("location:" . urlsite . "?m=indexAtiende");
     }
+
+    // ----- CRUD de RUTA -----
+    static function indexRuta() {
+        $modelo = new Modelo();
+        $dato = $modelo->mostrar("RUTA", "1");
+        require_once("vista/ruta/index.php");
+    }
+
+    static function nuevoRuta() {
+        require_once("vista/ruta/nuevo.php");
+    }
+
+    static function guardarRuta() {
+        $ciudad_origen = $_REQUEST['ciudad_origen'];
+        $ciudad_destino = $_REQUEST['ciudad_destino'];
+        $estacion_origen = $_REQUEST['estacion_origen'];
+        $estacion_destino = $_REQUEST['estacion_destino'];
+
+        $columnas = "ciudad_origen, ciudad_destino, estacion_origen, estacion_destino";
+        $valores = "'$ciudad_origen', '$ciudad_destino', '$estacion_origen', '$estacion_destino'";
+
+        $modelo = new Modelo();
+        $modelo->insertar("RUTA", $columnas, $valores);
+
+        header("location:" . urlsite . "?m=indexRuta");
+    }
+
+    static function editarRuta() {
+        $id = $_REQUEST['id'];
+        $modelo = new Modelo();
+        $dato = $modelo->mostrar("RUTA", "id_ruta = $id");
+        require_once("vista/ruta/editar.php");
+    }
+
+    static function actualizarRuta() {
+        $id = $_POST['id'];
+        $ciudad_origen = $_REQUEST['ciudad_origen'];
+        $ciudad_destino = $_REQUEST['ciudad_destino'];
+        $estacion_origen = $_REQUEST['estacion_origen'];
+        $estacion_destino = $_REQUEST['estacion_destino'];
+
+        $data = "ciudad_origen='$ciudad_origen', ciudad_destino='$ciudad_destino', 
+                estacion_origen='$estacion_origen', estacion_destino='$estacion_destino'";
+
+        $modelo = new Modelo();
+        $modelo->actualizar("RUTA", $data, "id_ruta=$id");
+
+        header("location:" . urlsite . "?m=indexRuta");
+    }
+
+    static function eliminarRuta() {
+        $id = $_REQUEST['id'];
+        $modelo = new Modelo();
+        $modelo->eliminar("RUTA", "id_ruta=$id");
+
+        header("location:" . urlsite . "?m=indexRuta");
+    }
+
+
+    // ----- CRUD de HORARIO -----
+    static function indexHorario() {
+        $modelo = new Modelo();
+        $dato = $modelo->mostrar("HORARIO", "1");
+        require_once("vista/horario/index.php");
+    }
+
+    static function nuevoHorario() {
+        $modelo = new Modelo();
+        $rutas = $modelo->mostrar("RUTA", "1");
+        require_once("vista/horario/nuevo.php");
+    }
+
+    static function guardarHorario() {
+        $tipo = $_REQUEST['tipo'];
+        $hora_salida = $_REQUEST['hora_salida'];
+        $hora_llegada = $_REQUEST['hora_llegada'];
+        $id_ruta = $_REQUEST['id_ruta'];
+
+        // Calcular la duración
+        $duracion_viaje = self::calcularDuracion($hora_salida, $hora_llegada);
+
+        $columnas = "tipo, hora_salida, hora_llegada, duracion_viaje, id_ruta";
+        $valores = "'$tipo', '$hora_salida', '$hora_llegada', '$duracion_viaje', $id_ruta";
+
+        $modelo = new Modelo();
+        $modelo->insertar("HORARIO", $columnas, $valores);
+
+        header("location:" . urlsite . "?m=indexHorario");
+    }
+
+    private static function calcularDuracion($salida, $llegada) {
+        $horaSalida = new DateTime($salida);
+        $horaLlegada = new DateTime($llegada);
+
+        if ($horaLlegada < $horaSalida) {
+            // Si la llegada es al día siguiente
+            $horaLlegada->modify('+1 day');
+        }
+
+        $intervalo = $horaSalida->diff($horaLlegada);
+        return $intervalo->format('%H:%I:%S');
+    }
+
+
+    static function editarHorario() {
+        $id = $_REQUEST['id'];
+        $modelo = new Modelo();
+        $dato = $modelo->mostrar("HORARIO", "id_horario = $id");
+        $rutas = $modelo->mostrar("RUTA", "1");
+        require_once("vista/horario/editar.php");
+    }
+
+    static function actualizarHorario() {
+        $id = $_REQUEST['id'];
+        $tipo = $_REQUEST['tipo'];
+        $hora_salida = $_REQUEST['hora_salida'];
+        $hora_llegada = $_REQUEST['hora_llegada'];
+        $id_ruta = $_REQUEST['id_ruta'];
+
+        // Calcular la duración
+        $duracion_viaje = self::calcularDuracion($hora_salida, $hora_llegada);
+
+        $data = "tipo='$tipo', hora_salida='$hora_salida', hora_llegada='$hora_llegada', 
+                duracion_viaje='$duracion_viaje', id_ruta=$id_ruta";
+
+        $modelo = new Modelo();
+        $modelo->actualizar("HORARIO", $data, "id_horario=$id");
+
+        header("location:" . urlsite . "?m=indexHorario");
+    }
+
+    static function eliminarHorario() {
+        $id = $_REQUEST['id'];
+        $modelo = new Modelo();
+        $modelo->eliminar("HORARIO", "id_horario=$id");
+
+        header("location:" . urlsite . "?m=indexHorario");
+    }
+
 
 
 }

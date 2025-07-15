@@ -9,6 +9,8 @@
     <li><a href="index.php?m=indexTransporte">Gestión de Transporte</a></li>
     <li><a href="?m=indexAtiende">Atiende</a></li>
     <li><a href="?m=indexConduce">Conduce</a></li>
+    <li><a href="index.php?m=indexRuta">Rutas</a></li>
+    <li><a href="index.php?m=indexHorario">Horarios</a></li>
 </ul>
 
 <?php require_once("vista/layout/footer.php"); ?>
