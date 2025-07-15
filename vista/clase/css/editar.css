@@ -1,39 +1,49 @@
+/* Estilos generales */
 body {
-    font-family: 'Segoe UI', Tahoma, sans-serif;
-    background-color: #f2f2f2;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f0f0;
     color: #002f6c;
     margin: 0;
     padding: 0;
 }
 
+/* Título */
 h1 {
     text-align: center;
-    margin-top: 30px;
     color: #002f6c;
-    animation: fadeInDown 0.5s ease-out;
+    margin-top: 30px;
+    font-size: 2rem;
+    animation: fadeInDown 0.6s ease-out;
 }
 
+/* Formulario */
 form {
-    max-width: 500px;
+    max-width: 600px;
     margin: 40px auto;
     padding: 30px;
-    background-color: #fff;
+    background-color: #ffffff;
     border-radius: 16px;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
-    animation: fadeIn 0.6s ease;
+    animation: fadeIn 0.8s ease;
 }
 
+/* Etiquetas */
 label {
     display: block;
     margin-top: 15px;
     margin-bottom: 5px;
     font-weight: bold;
+    color: #002f6c;
 }
 
+/* Campos de entrada */
 input[type="text"],
-input[type="number"] {
+input[type="number"],
+input[type="email"],
+input[type="date"],
+select {
     width: 100%;
-    padding: 12px;
+    padding: 12px 15px;
     border: 1px solid #ccc;
     border-radius: 10px;
     font-size: 1rem;
@@ -41,40 +51,94 @@ input[type="number"] {
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-input:focus {
+/* Enfocar campos */
+input:focus,
+select:focus {
     border-color: #002f6c;
     box-shadow: 0 0 5px rgba(0, 47, 108, 0.2);
     outline: none;
 }
 
-/* Botones */
-input[type="submit"] {
-    margin-top: 25px;
-    width: 100%;
-    padding: 12px;
+/* Contenedor de botones */
+.botones-form {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    gap: 15px;
+}
+
+/* Estilos para los botones */
+.boton-guardar,
+.boton-volver {
+    flex: 1;
+    padding: 12px 0;
     font-size: 1rem;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
     font-weight: bold;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Botón Guardar */
+.boton-guardar {
     background-color: #f8c100;
     color: #002f6c;
     border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-input[type="submit"]:hover {
+.boton-guardar:hover {
     background-color: #ffd633;
-    transform: scale(1.03);
+    transform: scale(1.05);
+}
+
+/* Botón Cancelar */
+.boton-volver {
+    background-color: white;
+    color: #002f6c;
+    border: 2px solid #002f6c;
+}
+
+.boton-volver:hover {
+    background-color: #002f6c;
+    color: white;
+    transform: scale(1.05);
 }
 
 /* Animaciones */
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes fadeInDown {
-    from { opacity: 0; transform: translateY(-20px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .botones-form {
+        flex-direction: column;
+    }
+
+    .boton-guardar,
+    .boton-volver {
+        width: 100%;
+    }
 }

@@ -96,12 +96,14 @@
         <label>Razón Social:</label>
         <input type="text" name="razon_social"><br>
     </div>
-
-    <input type="submit" value="Guardar">
-    <input type="hidden" name="m" value="guardarPasajero">
-
     
+    <div class="botones-form">
+        <input type="submit" value="Guardar" class="boton-guardar">
+        <button type="button" onclick="window.location.href='index.php?m=indexPasajero'" class="boton-volver">Cancelar</button>
+    </div>
+
 </form>
+
 <script>
     function mostrarCamposEmpresa() {
         const tipo = document.getElementById('tipo_pasajero').value;

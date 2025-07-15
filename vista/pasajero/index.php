@@ -24,8 +24,8 @@
                     <td><?= $v['apellidos'] ?></td>
                     <td><?= $v['telefono'] ?></td>
                     <td>
-                        <a href="index.php?m=editarPasajero&id=<?= $v['id_pasajero'] ?>">Editar</a>
-                        <a href="index.php?m=eliminarPasajero&id=<?= $v['id_pasajero'] ?>" onclick="return confirm('¿Está seguro de eliminar?')">Eliminar</a>
+                        <a href="index.php?m=editarPasajero&id=<?= $v['id_pasajero'] ?>" class="btn-editar">Editar</a>
+                        <a href="index.php?m=eliminarPasajero&id=<?= $v['id_pasajero'] ?>" class="btn-eliminar" onclick="return confirm('¿Está seguro de eliminar?')">Eliminar</a>
                     </td>
                 </tr>
             <?php endforeach ?>
@@ -33,8 +33,9 @@
     </tbody>
 </table>
 
-<form action="index.php" method="get">
-    <button type="submit">Volver al menú</button>
-</form>
+<!-- Botón para volver al menú del administrador -->
+<div class="botones-form" style="margin-top: 30px;">
+    <a href="index.php?m=menuAdmin" class="boton-volver">Volver al menú de administrador</a>
+</div>
 
 <?php require_once("vista/layout/footer.php") ?>
