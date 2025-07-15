@@ -20,8 +20,8 @@
         <td><?= $ruta['estacion_origen'] ?></td>
         <td><?= $ruta['estacion_destino'] ?></td>
         <td>
-            <a href="?m=editarRuta&id=<?= $ruta['id_ruta'] ?>" class="btn-editar">Ed</a>
-            <a href="?m=eliminarRuta&id=<?= $ruta['id_ruta'] ?>" class="btn-eliminar" onclick="return confirm('¿Está seguro?')">El</a>
+            <a href="?m=editarRuta&id=<?= $ruta['id_ruta'] ?>" class="btn-editar">ED</a>
+            <a href="?m=eliminarRuta&id=<?= $ruta['id_ruta'] ?>" class="btn-eliminar" onclick="return confirm('¿Está seguro?')">EL</a>
         </td>
 
     </tr>

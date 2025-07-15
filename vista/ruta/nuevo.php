@@ -1,5 +1,5 @@
 <?php require_once("vista/layout/header.php") ?>
-<link rel="stylesheet" href="/proyectobd/vista/ruta/css/editar.css">
+<link rel="stylesheet" href="/proyectobd/vista/ruta/css/nuevo.css">
 
 <h1>Nueva Ruta</h1>
 <form method="get" action="">
