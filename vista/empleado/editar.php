@@ -20,7 +20,8 @@
         <input type="email" name="email" value="<?= $v['email'] ?>" required>
 
         <div class="botones-form">
-            <input type="submit" value="Actualizar" class="boton-actualizar">
+            <input type="submit" value="Guardar" class="boton-guardar">
+            <a href="index.php?m=indexEmpleado" class="boton-volver">Cancelar</a>
         </div>
 
         <input type="hidden" name="m" value="actualizar">

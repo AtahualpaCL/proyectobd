@@ -36,6 +36,6 @@
     </table>
 </div>
 
-<a href="index.php" class="boton-volver">Volver al menú</a>
+<a href="index.php?m=menuAdmin" class="boton-volver">Volver al menú de administrador</a>
 
 <?php require_once("vista/layout/footer.php") ?>

@@ -11,14 +11,18 @@
         <option value="PeruRail Vistadome Observatory">PeruRail Vistadome Observatory</option>
         <option value="Hiram Bingham">Hiram Bingham</option>
     </select><br>
-    
+
     <label>Precio:</label><br>
     <input type="number" step="0.01" name="precio_clase" required><br>
 
     <label>Servicios:</label><br>
     <input type="text" name="servicios"><br>
 
-    <input type="submit" value="Guardar">
+    <div class="botones-form">
+        <input type="submit" value="Guardar" class="boton-guardar">
+        <a href="index.php?m=indexClase" class="boton-volver">Cancelar</a>
+    </div>
+
     <input type="hidden" name="m" value="guardarClase">
 </form>
 

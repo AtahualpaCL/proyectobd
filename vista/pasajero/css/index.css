@@ -1,9 +1,9 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f7f7f7;
-    color: #002f6c;
+    background-color: #f0f0f0;
     margin: 0;
     padding: 0;
+    color: #002f6c;
 }
 
 h1 {
@@ -14,7 +14,8 @@ h1 {
     animation: fadeInDown 0.6s ease-out;
 }
 
-a.boton-nuevo {
+/* Botón nuevo */
+.boton-nuevo {
     display: block;
     width: fit-content;
     margin: 20px auto;
@@ -24,34 +25,37 @@ a.boton-nuevo {
     font-weight: bold;
     text-decoration: none;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-a.boton-nuevo:hover {
+.boton-nuevo:hover {
     background-color: #ffd633;
     transform: scale(1.05);
 }
 
-/* Tabla contenedor */
+/* Tabla */
 table {
-    width: 90%;
-    max-width: 850px;
-    margin: 30px auto;
-    background-color: white;
+    width: 100%;
+    max-width: 720px;         /* Limita el ancho máximo */
+    margin: 0 auto;           /* Centra horizontalmente */
     border-collapse: collapse;
+    background-color: white;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-    animation: fadeIn 0.8s ease;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.7s ease;
 }
 
+/* Encabezado y celdas */
 th, td {
-    padding: 14px 20px;
+    padding: 10px 15px;
     text-align: center;
     font-size: 0.95rem;
+    white-space: nowrap;      /* Evita que el texto salte de línea */
 }
 
+/* Cabecera */
 th {
     background-color: #002f6c;
     color: white;
@@ -66,52 +70,58 @@ tr:hover {
     background-color: #eaf1f8;
 }
 
-/* Botones editar/eliminar */
-td a {
+
+/* Botones de acción */
+.btn-editar,
+.btn-eliminar {
+    padding: 8px 0;
+    width: 80px;
     display: inline-block;
-    padding: 6px 12px;
-    margin: 2px;
-    font-size: 0.85rem;
-    font-weight: bold;
     border-radius: 6px;
-    text-decoration: none;
-    transition: all 0.3s ease;
+    font-weight: bold;
+    font-size: 0.9rem;
     color: white;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-td a[href*="editarPasajero"] {
+.btn-editar {
     background-color: #235789;
 }
 
-td a[href*="editarPasajero"]:hover {
+.btn-editar:hover {
     background-color: #1d456d;
     transform: scale(1.05);
 }
 
-td a[href*="eliminarPasajero"] {
+.btn-eliminar {
     background-color: #d62828;
+    margin-left: 8px;
 }
 
-td a[href*="eliminarPasajero"]:hover {
+.btn-eliminar:hover {
     background-color: #a61b1b;
     transform: scale(1.05);
 }
 
-/* Botón volver */
-form button {
+/* Botón de volver */
+.boton-volver {
     display: block;
+    width: fit-content;
     margin: 30px auto;
     padding: 12px 30px;
+    font-size: 1rem;
+    font-weight: bold;
     background-color: white;
     color: #002f6c;
     border: 2px solid #002f6c;
-    font-weight: bold;
     border-radius: 10px;
-    cursor: pointer;
+    text-decoration: none;
     transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-form button:hover {
+.boton-volver:hover {
     background-color: #002f6c;
     color: white;
     transform: scale(1.05);

@@ -1,3 +1,4 @@
+/* Estilo general */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f0f0f0;
@@ -15,7 +16,7 @@ h1 {
 }
 
 form {
-    max-width: 700px;
+    max-width: 600px;
     margin: 40px auto;
     padding: 30px;
     background-color: #ffffff;
@@ -27,7 +28,7 @@ form {
 label {
     display: block;
     margin-top: 15px;
-    margin-bottom: 6px;
+    margin-bottom: 5px;
     font-weight: bold;
     color: #002f6c;
 }
@@ -44,7 +45,6 @@ select {
     font-size: 1rem;
     box-sizing: border-box;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    margin-bottom: 10px;
 }
 
 input:focus,
@@ -54,42 +54,63 @@ select:focus {
     outline: none;
 }
 
-input[type="radio"],
-input[type="checkbox"] {
-    margin-right: 8px;
-    transform: scale(1.1);
-    cursor: pointer;
-}
-
-span {
-    font-size: 0.95rem;
-    color: #555;
-}
-
-/* Campos dinámicos */
-#datos_empresa input[type="text"] {
-    margin-top: 10px;
-}
-
-/* Botón */
-input[type="submit"] {
-    display: block;
-    width: 100%;
-    padding: 14px 0;
+/* Contenedor de botones */
+.botones-form {
+    display: flex;
+    justify-content: space-between;
     margin-top: 30px;
+    gap: 15px;
+}
+
+/* Estilos comunes para ambos botones */
+input[type="submit"],
+.boton-volver {
+    flex: 1;
+    padding: 12px 0;
+    font-size: 1rem;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    border: none;
+    text-decoration: none;
+    display: inline-block;
+}
+
+/* Botón Guardar */
+input[type="submit"] {
     background-color: #f8c100;
     color: #002f6c;
-    font-weight: bold;
-    font-size: 1rem;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 input[type="submit"]:hover {
     background-color: #ffd633;
+    transform: scale(1.05);
+}
+
+/* Botón Cancelar (enlace con aspecto de botón) */
+a.boton-volver {
+    display: inline-block;
+    flex: 1;
+    padding: 12px 0;
+    font-size: 1rem;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: none !important;
+    background-color: white;
+    color: #002f6c;
+    border: 2px solid #002f6c;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+a.boton-volver:hover {
+    background-color: #002f6c;
+    color: white;
     transform: scale(1.05);
 }
 
@@ -106,11 +127,12 @@ input[type="submit"]:hover {
 
 /* Responsive */
 @media (max-width: 600px) {
-    form {
-        padding: 20px;
+    .botones-form {
+        flex-direction: column;
     }
 
-    input[type="submit"] {
-        font-size: 0.95rem;
+    input[type="submit"],
+    .boton-volver {
+        width: 100%;
     }
 }

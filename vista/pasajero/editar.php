@@ -17,8 +17,10 @@
         <label>Email:</label><br>
         <input type="email" name="email" value="<?= $v['email'] ?>"><br><br>
 
-        <input type="submit" value="Actualizar">
-        <input type="hidden" name="m" value="actualizar">
+        <div class="botones-form">
+            <input type="submit" value="Guardar" class="boton-guardar">
+            <a href="index.php?m=indexPasajero" class="boton-volver">Cancelar</a>
+        </div>
     <?php endforeach; endforeach; ?>
 </form>
 
