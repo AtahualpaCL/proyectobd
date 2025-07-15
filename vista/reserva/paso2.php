@@ -9,36 +9,28 @@
         <h3>Horario: <?= $horario['hora_salida'] ?> - <?= $horario['hora_llegada'] ?> (<?= $horario['duracion_viaje'] ?>)</h3>
         <p>Estación: <?= $horario['estacion_origen'] ?> → <?= $horario['estacion_destino'] ?></p>
 
-        <?php if (!empty($horario['transportes'])): ?>
-            <?php foreach ($horario['transportes'] as $transporte): ?>
-                <div style="border:1px solid #ccc; padding:8px; margin:5px;">
-                    <input type="radio" name="seleccion[<?= $horario['id_horario'] ?>]" value="<?= $transporte['id_tran'] ?>" required>
-                    <strong><?= $transporte['clase'] ?> - Precio: <?= $transporte['precio_clase'] ?></strong>
-                    <div style="display:none;" class="servicios">
-                        Servicios: <?= $transporte['servicios'] ?>
-                    </div>
+        <?php foreach ($horario['transportes'] as $transporte): ?>
+            <div style="border:1px solid #ccc; padding:8px; margin:5px;">
+                <input type="radio" 
+                    name="seleccion" 
+                    value="<?= $horario['id_horario'] ?>-<?= $transporte['id_tran'] ?>" 
+                    required>
+                <strong><?= $transporte['clase'] ?> - Precio: <?= $transporte['precio_clase'] ?></strong>
+                <div style="display:none;" class="servicios">
+                    Servicios: <?= $transporte['servicios'] ?>
                 </div>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <p>No hay transportes asignados a este horario.</p>
-        <?php endif; ?>
+            </div>
+        <?php endforeach; ?>
         <hr>
     <?php endforeach; ?>
 
     <input type="hidden" name="fase" value="<?= $fase ?>">
-    <input type="hidden" name="m" value="<?php 
-        if ($fase == 'ida' && $_SESSION['reserva']['tipo_viaje'] == 'ida y retorno') {
-            echo 'paso2Reserva';
-        } else {
-            echo 'paso3Reserva';
-        }
-    ?>">
+    <input type="hidden" name="m" value="paso2Reserva">
 
     <input type="submit" value="Continuar">
 </form>
 
 <script>
-    // Mostrar/Ocultar servicios al seleccionar
     document.querySelectorAll('input[type="radio"]').forEach(radio => {
         radio.addEventListener('change', () => {
             document.querySelectorAll('.servicios').forEach(div => div.style.display = 'none');
