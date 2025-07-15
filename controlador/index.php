@@ -448,7 +448,7 @@ class modeloController {
     }
 
     static function actualizarRuta() {
-        $id = $_POST['id'];
+        $id = $_REQUEST['id'];
         $ciudad_origen = $_REQUEST['ciudad_origen'];
         $ciudad_destino = $_REQUEST['ciudad_destino'];
         $estacion_origen = $_REQUEST['estacion_origen'];

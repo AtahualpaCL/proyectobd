@@ -1,0 +1,92 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 30px;
+    color: #002f6c;
+}
+
+.menu-container h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    color: #002f6c;
+    font-size: 2.2rem;
+}
+
+/* Grid de ítems */
+.menu-grid {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 25px;
+    padding: 0;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* Cada bloque */
+.menu-grid li {
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    padding: 30px 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu-grid li:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Enlace dentro del bloque */
+.menu-grid li a {
+    text-decoration: none;
+    color: #002f6c;
+    font-weight: bold;
+    font-size: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Icono */
+.menu-grid li a i {
+    font-size: 28px;
+    color: #f8c100;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.menu-grid li a:hover i {
+    transform: scale(1.1);
+    color: #ffda47;
+}
+
+/* Botón de volver */
+.botones-form {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.boton-volver {
+    background-color: white;
+    border: 2px solid #002f6c;
+    color: #002f6c;
+    padding: 10px 25px;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.boton-volver:hover {
+    background-color: #002f6c;
+    color: white;
+    transform: scale(1.05);
+}

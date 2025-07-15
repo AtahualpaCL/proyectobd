@@ -1,0 +1,99 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9f9f9;
+    color: #002f6c;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 30px;
+    color: #002f6c;
+    font-size: 1.8rem;
+}
+
+form {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 6px;
+    font-weight: bold;
+}
+
+select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+select:focus {
+    border-color: #002f6c;
+    outline: none;
+}
+
+.botones-form {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.boton-guardar {
+    flex: 1;
+    background-color: #f8c100;
+    color: #002f6c;
+    font-weight: bold;
+    border: none;
+    padding: 12px 0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.boton-guardar:hover {
+    background-color: #ffd633;
+    transform: scale(1.03);
+}
+
+.boton-volver {
+    flex: 1;
+    background-color: white;
+    color: #002f6c;
+    border: 2px solid #002f6c;
+    font-weight: bold;
+    padding: 12px 0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.boton-volver:hover {
+    background-color: #002f6c;
+    color: white;
+    transform: scale(1.03);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .botones-form {
+        flex-direction: column;
+    }
+
+    .boton-guardar,
+    .boton-volver {
+        width: 100%;
+    }
+}

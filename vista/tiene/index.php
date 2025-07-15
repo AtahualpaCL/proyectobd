@@ -1,9 +1,10 @@
 <?php require_once("vista/layout/header.php"); ?>
+<link rel="stylesheet" href="/proyectobd/vista/tiene/css/index.css">
 
 <h1>Lista de Transporte por Horario</h1>
 <a href="?m=nuevoTiene">Asignar Transporte a Horario</a>
 
-<table border="1">
+<table>
     <thead>
         <tr>
             <th>ID Transporte</th>
@@ -18,7 +19,9 @@
                     <td><?= $d['id_tran'] ?></td>
                     <td><?= $d['id_horario'] ?></td>
                     <td>
-                        <a href="?m=eliminarTiene&id_tran=<?= $d['id_tran'] ?>&id_horario=<?= $d['id_horario'] ?>" onclick="return confirm('¿Está seguro?')">Eliminar</a>
+                        <a href="?m=eliminarTiene&id_tran=<?= $d['id_tran'] ?>&id_horario=<?= $d['id_horario'] ?>" 
+                        class="boton-eliminar"
+                        onclick="return confirm('¿Está seguro?')">Eliminar</a>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -26,8 +29,8 @@
     </tbody>
 </table>
 <br>
-<form action="index.php" method="get">
-    <button type="submit">Volver al menú</button>
-</form>
+<div class="botones-form" style="margin-top: 30px;">
+    <a href="index.php?m=menuAdmin" class="boton-volver">Volver al menú de administrador</a>
+</div>
 
 <?php require_once("vista/layout/footer.php"); ?>
