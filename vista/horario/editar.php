@@ -1,6 +1,6 @@
 <?php require_once("vista/layout/header.php") ?>
 <h1>Editar Horario</h1>
-<form method="post" action="">
+<form method="get" action="">
     <?php foreach($dato as $d): ?>
         <input type="hidden" name="id" value="<?= $d['id_horario'] ?>">
 
@@ -17,12 +17,10 @@
 
         <label>Ruta:</label><br>
         <select name="id_ruta" required>
-            <?php foreach($rutas as $grupo): ?>
-                <?php foreach($grupo as $r): ?>
+            <?php foreach($rutas as $r): ?>
                     <option value="<?= $r['id_ruta'] ?>" <?= $r['id_ruta'] == $d['id_ruta'] ? 'selected' : '' ?>>
                         <?= $r['ciudad_origen'] ?> - <?= $r['ciudad_destino'] ?>
                     </option>
-                <?php endforeach; ?>
             <?php endforeach; ?>
         </select><br>
 

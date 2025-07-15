@@ -18,7 +18,6 @@
                     <td><?= $d['id_tran'] ?></td>
                     <td><?= $d['id_horario'] ?></td>
                     <td>
-                        <a href="?m=editarTiene&id_tran=<?= $d['id_tran'] ?>&id_horario=<?= $d['id_horario'] ?>">Editar</a> |
                         <a href="?m=eliminarTiene&id_tran=<?= $d['id_tran'] ?>&id_horario=<?= $d['id_horario'] ?>" onclick="return confirm('¿Está seguro?')">Eliminar</a>
                     </td>
                 </tr>

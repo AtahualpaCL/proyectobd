@@ -3,8 +3,9 @@
 
 <h1>Editar Pasajero</h1>
 <form action="" method="get">
-    <?php foreach($dato as $value): foreach($value as $v): ?>
+    <?php foreach($dato as $v): ?>
         <input type="hidden" name="id" value="<?= $v['id_pasajero'] ?>">
+
         <label>Nombres:</label><br>
         <input type="text" name="nombres" value="<?= $v['nombres'] ?>"><br>
 
@@ -21,8 +22,9 @@
             <input type="submit" value="Guardar" class="boton-guardar">
             <a href="index.php?m=indexPasajero" class="boton-volver">Cancelar</a>
         </div>
-        <input type="hidden" name="m" value="editarPasajero">
-    <?php endforeach; endforeach; ?>
+
+        <input type="hidden" name="m" value="actualizarPasajero">
+    <?php endforeach; ?>
 </form>
 
 <?php require_once("vista/layout/footer.php") ?>

@@ -378,24 +378,14 @@ class modeloController {
 
     static function nuevoAtiende() {
         $modelo = new Modelo();
-        $tripulantes_raw = $modelo->mostrar("TRIPULANTE_DE_CABINA", "1");
-        $transportes_raw = $modelo->mostrar("TRANSPORTE", "1");
 
-        // Desanidar Tripulantes
-        $tripulantes = [];
-        foreach ($tripulantes_raw as $grupo) {
-            foreach ($grupo as $t) {
-                $tripulantes[] = $t;
-            }
-        }
+        // Obtener tripulantes con sus datos
+        $tripulantes = $modelo->consulta("SELECT E.id_empleado, E.nombre, E.apellido
+                                        FROM EMPLEADO E
+                                        JOIN TRIPULANTE_DE_CABINA T ON E.id_empleado = T.id_empleado");
 
-        // Desanidar Transportes
-        $transportes = [];
-        foreach ($transportes_raw as $grupo) {
-            foreach ($grupo as $tran) {
-                $transportes[] = $tran;
-            }
-        }
+        // Obtener transportes
+        $transportes = $modelo->mostrar("TRANSPORTE", "1");
 
         require_once("vista/atiende/nuevo.php");
     }
@@ -422,6 +412,7 @@ class modeloController {
 
         header("location:" . urlsite . "?m=indexAtiende");
     }
+
 
     // ----- CRUD de RUTA -----
     static function indexRuta() {
@@ -683,11 +674,39 @@ class modeloController {
         require_once("vista/reserva/paso3.php");
     }
 
-    // Paso 4: Confirmación y pago
     static function paso4Reserva() {
         $_SESSION['reserva'] = array_merge($_SESSION['reserva'], $_REQUEST);
+
+        $contacto_compra = $_POST['contacto_compra'] ?? 'principal';
+        $_SESSION['reserva']['contacto_compra'] = $contacto_compra;
+
+        if ($contacto_compra === 'principal') {
+            $_SESSION['reserva']['contacto_data'] = $_POST['pasajero'];
+
+        } elseif (strpos($contacto_compra, 'adulto_') === 0) {
+            $index = explode('_', $contacto_compra)[1];
+
+            // Promover el adulto secundario seleccionado como principal
+            $_SESSION['reserva']['pasajero'] = $_POST['pasajeros_secundarios']['adulto'][$index] ?? null;
+
+            // Agregar el pasajero principal anterior como secundario adulto
+            $nextIndex = count($_POST['pasajeros_secundarios']['adulto']) + 1;
+            $_POST['pasajeros_secundarios']['adulto'][$nextIndex] = $_POST['pasajero'];
+
+            // Eliminar el contacto de compra de los pasajeros secundarios
+            unset($_POST['pasajeros_secundarios']['adulto'][$index]);
+
+            $_SESSION['reserva']['contacto_data'] = $_SESSION['reserva']['pasajero'];
+        } else {
+            $_SESSION['reserva']['contacto_data'] = null;
+        }
+
+        // Guardamos la lista actualizada de pasajeros secundarios
+        $_SESSION['reserva']['pasajeros_secundarios'] = $_POST['pasajeros_secundarios'] ?? [];
+
         require_once("vista/reserva/paso4.php");
     }
+
 
     // Guardar todo en la base de datos
         public function confirmarReserva() {
@@ -732,16 +751,31 @@ class modeloController {
         // === 4. Insertar la RESERVA ===
         $fecha_reserva = date('Y-m-d');
         $fecha_retorno = !empty($reserva['fecha_retorno']) ? "'{$reserva['fecha_retorno']}'" : "NULL";
-        $columnas = "tipo_viaje, tipo_transporte, fecha_reserva, fecha_salida, fecha_retorno, id_pasajero, id_horario, id_pago";
+
+        $id_horario_ida = $reserva['ida_horario'];
+        $id_horario_retorno = ($reserva['tipo_viaje'] === 'ida_vuelta' && !empty($reserva['retorno_horario'])) ? $reserva['retorno_horario'] : "NULL";
+
+        $columnas = "tipo_viaje, tipo_transporte, fecha_reserva, fecha_salida, fecha_retorno, id_pasajero, id_horario_ida, id_horario_retorno, id_pago";
         $valores = "'{$reserva['tipo_viaje']}', 'Tren', '$fecha_reserva', '{$reserva['fecha_salida']}', $fecha_retorno,
-                    $id_contacto, {$reserva['id_horario']}, $id_pago";
+                    $id_contacto, $id_horario_ida, $id_horario_retorno, $id_pago";
         $modelo->insertar("RESERVA", $columnas, $valores);
         $id_reserva = $modelo->getLastId();
 
+        $contacto_compra = $_SESSION['reserva']['contacto_compra'] ?? 'principal';
+
         // === 5. Insertar PASAJEROS_SECUNDARIOS ===
         foreach ($reserva['pasajeros_secundarios'] as $tipo => $grupo) {
-            foreach ($grupo as $ps) {
-                // Insertamos en PASAJEROS_SECUNDARIOS
+            foreach ($grupo as $index => $ps) {
+
+                // Construir el identificador del pasajero solo si es adulto
+                if ($tipo === 'adulto') {
+                    $identificador = "adulto_{$index}";
+                    if ($identificador === $contacto_compra) {
+                        continue; // Saltamos este adulto porque ya se guardó en PASAJERO
+                    }
+                }
+
+                // Insertar en PASAJEROS_SECUNDARIOS
                 $modelo->insertar("PASAJEROS_SECUNDARIOS", "id_reserva", "$id_reserva");
                 $id_ps = $modelo->getLastId();
 
