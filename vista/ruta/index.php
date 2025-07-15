@@ -1,8 +1,9 @@
 <?php require_once("vista/layout/header.php") ?>
+<link rel="stylesheet" href="/proyectobd/vista/ruta/css/index.css">
 
 <h1>Lista de Rutas</h1>
-<a href="?m=nuevoRuta">Nueva Ruta</a>
-<table border="1">
+<a href="?m=nuevoRuta" class="boton-nuevo">+ Nueva Ruta</a>
+<table>
     <tr>
         <th>ID</th>
         <th>Ciudad Origen</th>
@@ -19,15 +20,16 @@
         <td><?= $ruta['estacion_origen'] ?></td>
         <td><?= $ruta['estacion_destino'] ?></td>
         <td>
-            <a href="?m=editarRuta&id=<?= $ruta['id_ruta'] ?>">Editar</a> |
-            <a href="?m=eliminarRuta&id=<?= $ruta['id_ruta'] ?>" onclick="return confirm('¿Está seguro?')">Eliminar</a>
+            <a href="?m=editarRuta&id=<?= $ruta['id_ruta'] ?>" class="btn-editar">Ed</a>
+            <a href="?m=eliminarRuta&id=<?= $ruta['id_ruta'] ?>" class="btn-eliminar" onclick="return confirm('¿Está seguro?')">El</a>
         </td>
+
     </tr>
     <?php endforeach; ?>
 </table>
 
-<form action="index.php" method="get">
-    <button type="submit">Volver al menú</button>
-</form>
+<div class="botones-form" style="margin-top: 30px;">
+    <a href="index.php?m=menuAdmin" class="boton-volver">Volver al menú de administrador</a>
+</div>
 
 <?php require_once("vista/layout/footer.php") ?>

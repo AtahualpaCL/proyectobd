@@ -1,4 +1,6 @@
 <?php require_once("vista/layout/header.php") ?>
+<link rel="stylesheet" href="/proyectobd/vista/ruta/css/editar.css">
+
 <h1>Nueva Ruta</h1>
 <form method="get" action="">
     <label>Ciudad Origen:</label><br>
@@ -13,7 +15,10 @@
     <label>Estación Destino:</label><br>
     <input type="text" name="estacion_destino" required><br>
 
-    <input type="submit" value="Guardar">
+    <div class="botones-form">
+        <input type="submit" value="Guardar" class="boton-guardar">
+        <button type="button" onclick="window.location.href='index.php?m=indexRuta'" class="boton-volver">Cancelar</button>
+    </div>
     <input type="hidden" name="m" value="guardarRuta">
 </form>
 <?php require_once("vista/layout/footer.php") ?>
