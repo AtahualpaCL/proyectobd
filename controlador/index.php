@@ -608,15 +608,41 @@ class modeloController {
     // Paso 2: Mostrar horarios y transportes según ciudades seleccionadas
     static function paso2Reserva() {
         $_SESSION['reserva'] = array_merge($_SESSION['reserva'] ?? [], $_REQUEST);
-
         $modelo = new Modelo();
 
         $fase = $_REQUEST['fase'] ?? 'ida';
         $reserva = $_SESSION['reserva'];
 
+        // Si se seleccionó en el POST algún transporte
+        if (isset($_POST['seleccion'])) {
+            list($id_horario, $id_transporte) = explode('-', $_POST['seleccion']);
+            if ($fase === 'ida') {
+                $_SESSION['reserva']['ida_horario'] = $id_horario;
+                $_SESSION['reserva']['ida_transporte'] = $id_transporte;
+
+                if ($reserva['tipo_viaje'] === 'ida_vuelta') {
+                    // Redirigir a paso2 para la fase retorno
+                    header("Location: index.php?m=paso2Reserva&fase=retorno");
+                    exit;
+                } else {
+                    // Solo ida, continuar a paso3
+                    header("Location: index.php?m=paso3Reserva");
+                    exit;
+                }
+            } elseif ($fase === 'retorno') {
+                $_SESSION['reserva']['retorno_horario'] = $id_horario;
+                $_SESSION['reserva']['retorno_transporte'] = $id_transporte;
+
+                header("Location: index.php?m=paso3Reserva");
+                exit;
+            }
+        }
+
+        // Determinar los datos según la fase
         $ciudad_origen = ($fase === 'ida') ? $reserva['ciudad_origen'] : $reserva['ciudad_destino'];
         $ciudad_destino = ($fase === 'ida') ? $reserva['ciudad_destino'] : $reserva['ciudad_origen'];
         $fecha = ($fase === 'ida') ? $reserva['fecha_salida'] : $reserva['fecha_retorno'];
+        error_log("FASE: $fase | FECHA: $fecha");
 
         $rutas = $modelo->consulta("SELECT * FROM RUTA WHERE ciudad_origen = '$ciudad_origen' AND ciudad_destino = '$ciudad_destino'");
 
@@ -643,12 +669,11 @@ class modeloController {
                     WHERE ti.id_horario = $id_horario"
                 );
             }
+            unset($horario);
         }
 
         require_once("vista/reserva/paso2.php");
     }
-
-
 
 
     // Paso 3: Formulario para datos de pasajeros
