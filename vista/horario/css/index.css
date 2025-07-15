@@ -1,0 +1,134 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f0f0;
+    color: #002f6c;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 2rem;
+    color: #002f6c;
+    animation: fadeInDown 0.6s ease-out;
+}
+
+.boton-nuevo {
+    display: block;
+    width: fit-content;
+    margin: 20px auto;
+    padding: 12px 25px;
+    background-color: #f8c100;
+    color: #002f6c;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.boton-nuevo:hover {
+    background-color: #ffd633;
+    transform: scale(1.05);
+}
+
+.contenedor-tabla {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.7s ease;
+}
+
+th, td {
+    padding: 14px 20px;
+    text-align: center;
+    font-size: 0.95rem;
+}
+
+th {
+    background-color: #002f6c;
+    color: white;
+    text-transform: uppercase;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #eaf1f8;
+}
+
+.btn-editar,
+.btn-eliminar {
+    padding: 8px 12px;
+    display: inline-block;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-right: 6px;
+}
+
+.btn-editar {
+    background-color: #235789;
+}
+
+.btn-editar:hover {
+    background-color: #1d456d;
+    transform: scale(1.05);
+}
+
+.btn-eliminar {
+    background-color: #d62828;
+}
+
+.btn-eliminar:hover {
+    background-color: #a61b1b;
+    transform: scale(1.05);
+}
+
+.boton-volver {
+    display: block;
+    width: fit-content;
+    margin: 30px auto;
+    padding: 12px 30px;
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: white;
+    color: #002f6c;
+    border: 2px solid #002f6c;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.boton-volver:hover {
+    background-color: #002f6c;
+    color: white;
+    transform: scale(1.05);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
