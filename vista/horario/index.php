@@ -5,6 +5,7 @@
     <tr>
         <th>ID</th>
         <th>Tipo</th>
+        <th>Fecha</th>
         <th>Hora Salida</th>
         <th>Hora Llegada</th>
         <th>Duración</th>
@@ -15,6 +16,7 @@
     <tr>
         <td><?= $h['id_horario'] ?></td>
         <td><?= $h['tipo'] ?></td>
+        <td><?= $h['fecha']?></td>
         <td><?= $h['hora_salida'] ?></td>
         <td><?= $h['hora_llegada'] ?></td>
         <td><?= $h['duracion_viaje'] ?></td>

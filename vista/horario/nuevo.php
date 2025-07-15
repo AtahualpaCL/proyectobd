@@ -4,12 +4,15 @@
     <label>Tipo:</label><br>
     <input type="text" name="tipo" required><br>
 
+    <label>Fecha:</label><br>
+    <input type="date" name="fecha" required><br>
+
     <label>Hora Salida:</label><br>
     <input type="time" name="hora_salida" required><br>
 
     <label>Hora Llegada:</label><br>
     <input type="time" name="hora_llegada" required><br>
-    
+
     <label>Ruta:</label><br>
     <select name="id_ruta" required>
         <option value="" disabled selected>Seleccione una ruta</option>

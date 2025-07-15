@@ -6,6 +6,8 @@
 
         <label>Tipo:</label><br>
         <input type="text" name="tipo" value="<?= $d['tipo'] ?>" required><br>
+        <label>Fecha:</label><br>
+        <input type="date" name="fecha" value="<?= $d['fecha'] ?>" required><br>
 
         <label>Hora Salida:</label><br>
         <input type="time" name="hora_salida" value="<?= $d['hora_salida'] ?>" required><br>

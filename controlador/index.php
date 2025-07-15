@@ -2,6 +2,14 @@
 require_once("modelo/index.php");
 
 class modeloController {
+    static function menuAdmin() {
+        require_once("vista/menu.php");
+    }
+
+    static function menuCliente() {
+        require_once("vista/cliente/landing.php");
+    }
+
     // -------- CRUD de PASAJERO --------
     static function indexPasajero() {
         $obj = new Modelo();
@@ -488,6 +496,7 @@ class modeloController {
 
     static function guardarHorario() {
         $tipo = $_REQUEST['tipo'];
+        $fecha = $_REQUEST['fecha'];
         $hora_salida = $_REQUEST['hora_salida'];
         $hora_llegada = $_REQUEST['hora_llegada'];
         $id_ruta = $_REQUEST['id_ruta'];
@@ -495,8 +504,8 @@ class modeloController {
         // Calcular la duración
         $duracion_viaje = self::calcularDuracion($hora_salida, $hora_llegada);
 
-        $columnas = "tipo, hora_salida, hora_llegada, duracion_viaje, id_ruta";
-        $valores = "'$tipo', '$hora_salida', '$hora_llegada', '$duracion_viaje', $id_ruta";
+        $columnas = "tipo, fecha, hora_salida, hora_llegada, duracion_viaje, id_ruta";
+        $valores = "'$tipo','$fecha','$hora_salida', '$hora_llegada', '$duracion_viaje', $id_ruta";
 
         $modelo = new Modelo();
         $modelo->insertar("HORARIO", $columnas, $valores);
@@ -529,6 +538,7 @@ class modeloController {
     static function actualizarHorario() {
         $id = $_REQUEST['id'];
         $tipo = $_REQUEST['tipo'];
+        $fecha = $_REQUEST['fecha'];
         $hora_salida = $_REQUEST['hora_salida'];
         $hora_llegada = $_REQUEST['hora_llegada'];
         $id_ruta = $_REQUEST['id_ruta'];
@@ -536,7 +546,7 @@ class modeloController {
         // Calcular la duración
         $duracion_viaje = self::calcularDuracion($hora_salida, $hora_llegada);
 
-        $data = "tipo='$tipo', hora_salida='$hora_salida', hora_llegada='$hora_llegada', 
+        $data = "tipo='$tipo',fecha='$fecha', hora_salida='$hora_salida', hora_llegada='$hora_llegada', 
                 duracion_viaje='$duracion_viaje', id_ruta=$id_ruta";
 
         $modelo = new Modelo();
@@ -553,6 +563,149 @@ class modeloController {
         header("location:" . urlsite . "?m=indexHorario");
     }
 
+
+    // ---------- CRUD TIENE ------------
+    static function indexTiene() {
+        $modelo = new Modelo();
+        $dato = $modelo->mostrar("TIENE", "1");
+        require_once("vista/tiene/index.php");
+    }
+
+    static function nuevoTiene() {
+        $modelo = new Modelo();
+        $transportes = $modelo->mostrar("TRANSPORTE", "1");
+        $horarios = $modelo->mostrar("HORARIO", "1");
+        require_once("vista/tiene/nuevo.php");
+    }
+
+    static function guardarTiene() {
+        $id_tran = $_REQUEST['id_tran'];
+        $id_horario = $_REQUEST['id_horario'];
+
+        $columnas = "id_tran, id_horario";
+        $valores = "$id_tran, $id_horario";
+
+        $modelo = new Modelo();
+        $modelo->insertar("TIENE", $columnas, $valores);
+        header("location:" . urlsite . "?m=indexTiene");
+    }
+
+    static function eliminarTiene() {
+        $id_tran = $_REQUEST['id_tran'];
+        $id_horario = $_REQUEST['id_horario'];
+
+        $modelo = new Modelo();
+        $modelo->eliminar("TIENE", "id_tran=$id_tran AND id_horario=$id_horario");
+        header("location:" . urlsite . "?m=indexTiene");
+    }
+
+    //RESERVAAAAAAAAAAAAAAAAA
+    // Paso 1: Selección de ciudades, fechas y cantidad de pasajeros
+    static function indexReserva() {
+        require_once("vista/reserva/paso1.php");
+    }
+
+    // Paso 2: Mostrar horarios y transportes según ciudades seleccionadas
+    static function paso2Reserva() {
+        $_SESSION['reserva'] = array_merge($_SESSION['reserva'] ?? [], $_REQUEST);
+
+        $modelo = new Modelo();
+
+        $fase = $_REQUEST['fase'] ?? 'ida';
+        $reserva = $_SESSION['reserva'];
+
+        $ciudad_origen = ($fase === 'ida') ? $reserva['ciudad_origen'] : $reserva['ciudad_destino'];
+        $ciudad_destino = ($fase === 'ida') ? $reserva['ciudad_destino'] : $reserva['ciudad_origen'];
+        $fecha = ($fase === 'ida') ? $reserva['fecha_salida'] : $reserva['fecha_retorno'];
+
+        $rutas = $modelo->consulta("SELECT * FROM RUTA WHERE ciudad_origen = '$ciudad_origen' AND ciudad_destino = '$ciudad_destino'");
+
+        $horarios = [];
+        if (!empty($rutas)) {
+            $ids_ruta = array_column($rutas, 'id_ruta');
+            $ids_ruta_str = implode(',', $ids_ruta);
+
+            $horarios = $modelo->consulta(
+                "SELECT h.*, r.ciudad_origen, r.ciudad_destino, r.estacion_origen, r.estacion_destino
+                FROM HORARIO h 
+                JOIN RUTA r ON h.id_ruta = r.id_ruta 
+                WHERE h.id_ruta IN ($ids_ruta_str) AND h.fecha = '$fecha'"
+            );
+
+            foreach ($horarios as &$horario) {
+                $id_horario = $horario['id_horario'];
+
+                $horario['transportes'] = $modelo->consulta(
+                    "SELECT t.*, c.clase, c.servicios, c.precio_clase 
+                    FROM TIENE ti
+                    JOIN TRANSPORTE t ON ti.id_tran = t.id_tran
+                    JOIN CLASE c ON t.id_clase = c.id_clase
+                    WHERE ti.id_horario = $id_horario"
+                );
+            }
+        }
+
+        require_once("vista/reserva/paso2.php");
+    }
+
+
+
+
+    // Paso 3: Formulario para datos de pasajeros
+    static function paso3Reserva() {
+        $_SESSION['reserva'] = array_merge($_SESSION['reserva'], $_REQUEST);
+
+        require_once("vista/reserva/paso3.php");
+    }
+
+    // Paso 4: Confirmación y pago
+    static function paso4Reserva() {
+        $_SESSION['reserva'] = array_merge($_SESSION['reserva'], $_REQUEST);
+
+        require_once("vista/reserva/paso4.php");
+    }
+
+    // Guardar todo en la base de datos
+    static function confirmarReserva() {
+        $modelo = new Modelo();
+        $reserva = $_SESSION['reserva'];
+
+        // Guardar pago
+        $modelo->insertar("PAGO", "metodo_pago, fecha_pago, monto",
+            "'{$reserva['metodo_pago']}', CURDATE(), {$reserva['monto_total']}");
+        $id_pago = $modelo->getLastId();
+
+        // Guardar reserva
+        $valores_reserva = "'{$reserva['tipo_viaje']}', '{$reserva['tipo_transporte']}', CURDATE(), '{$reserva['fecha_salida']}', '{$reserva['fecha_retorno']}', {$reserva['id_pasajero']}, {$reserva['id_horario']}, $id_pago";
+
+        $modelo->insertar("RESERVA",
+            "tipo_viaje, tipo_transporte, fecha_reserva, fecha_salida, fecha_retorno, id_pasajero, id_horario, id_pago",
+            $valores_reserva);
+
+        $id_reserva = $modelo->getLastId();
+
+        if (!empty($reserva['pasajeros_secundarios'])) {
+            foreach ($reserva['pasajeros_secundarios'] as $ps) {
+                $modelo->insertar("PASAJEROS_SECUNDARIOS", "id_reserva", "$id_reserva");
+                $id_ps = $modelo->getLastId();
+
+                if ($ps['tipo'] == 'adulto') {
+                    $modelo->insertar("PS_ADULTO", "id_pasajerosec, nombres, apellidos, genero, tipo_documento, numero_documento, nacionalidad, fech_nac, contacto_compra",
+                        "$id_ps, '{$ps['nombres']}', '{$ps['apellidos']}', '{$ps['genero']}', '{$ps['tipo_documento']}', '{$ps['numero_documento']}', '{$ps['nacionalidad']}', '{$ps['fech_nac']}', '{$ps['contacto_compra']}'");
+                } elseif ($ps['tipo'] == 'nino') {
+                    $modelo->insertar("PS_NIÑO", "id_pasajerosec, nombres, apellidos, genero, tipo_documento, numero_documento, nacionalidad, fech_nac",
+                        "$id_ps, '{$ps['nombres']}', '{$ps['apellidos']}', '{$ps['genero']}', '{$ps['tipo_documento']}', '{$ps['numero_documento']}', '{$ps['nacionalidad']}', '{$ps['fech_nac']}'");
+                } elseif ($ps['tipo'] == 'infante') {
+                    $modelo->insertar("PS_INFANTE", "id_pasajerosec, resposable",
+                        "$id_ps, '{$ps['responsable']}'");
+                }
+            }
+        }
+
+        unset($_SESSION['reserva']);
+
+        require_once("vista/reserva/confirmacion.php");
+    }
 
 
 }

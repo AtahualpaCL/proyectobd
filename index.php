@@ -10,7 +10,7 @@ if (isset($_GET['m'])) {
         echo "Método no encontrado";
     }
 } else {
-    // Mostrar el menú por defecto
-    require_once("vista/menu.php");
+    // Mostrar el selector de tipo de usuario
+    require_once("vista/selector_usuario.php");
 }
 ?>
