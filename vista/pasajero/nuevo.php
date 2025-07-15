@@ -101,6 +101,7 @@
         <input type="submit" value="Guardar" class="boton-guardar">
         <button type="button" onclick="window.location.href='index.php?m=indexPasajero'" class="boton-volver">Cancelar</button>
     </div>
+    <input type="hidden" name="m" value="guardarPasajero">
 
 </form>
 

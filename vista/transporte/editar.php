@@ -1,4 +1,5 @@
 <?php require_once("vista/layout/header.php") ?>
+<link rel="stylesheet" href="/proyectobd/vista/transporte/css/editar.css">
 
 <h1>Editar Transporte</h1>
 <form method="post" action="">
@@ -16,9 +17,11 @@
 
     <label>Aforo:</label><br>
     <input type="number" name="aforo" value="<?= $t['aforo'] ?>" required><br>
-
-    <input type="submit" value="Actualizar">
-    <input type="hidden" name="m" value="actualizarTransporte">
+    <div class="botones-form">
+        <input type="submit" value="Guardar" class="boton-guardar">
+        <button type="button" onclick="window.location.href='index.php?m=indexTransporte'" class="boton-volver">Cancelar</button>
+    </div>
+    <input type="hidden" name="m" value="editarTransporte">
 </form>
 
 <?php require_once("vista/layout/footer.php") ?>
