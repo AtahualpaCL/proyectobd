@@ -1,4 +1,5 @@
 <?php require_once("vista/layout/header.php") ?>
+<link rel="stylesheet" href="/proyectobd/vista/pasajero/css/editar.css">
 
 <h1>Editar Pasajero</h1>
 <form action="" method="get">

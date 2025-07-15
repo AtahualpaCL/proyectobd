@@ -1,8 +1,11 @@
 <?php require_once("vista/layout/header.php") ?>
+<link rel="stylesheet" href="/proyectobd/vista/pasajero/css/index.css">
 
 <h1>Listado de Pasajeros</h1>
-<a href="index.php?m=nuevoPasajero">Nuevo Pasajero</a>
-<table border="1">
+
+<a href="index.php?m=nuevoPasajero" class="boton-nuevo">+ Nuevo Pasajero</a>
+
+<table>
     <thead>
         <tr>
             <th>ID</th>
@@ -29,7 +32,7 @@
         <?php endif ?>
     </tbody>
 </table>
-<br>
+
 <form action="index.php" method="get">
     <button type="submit">Volver al menú</button>
 </form>

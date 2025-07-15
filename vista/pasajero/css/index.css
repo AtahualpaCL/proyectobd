@@ -1,0 +1,129 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f7f7f7;
+    color: #002f6c;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 2rem;
+    color: #002f6c;
+    animation: fadeInDown 0.6s ease-out;
+}
+
+a.boton-nuevo {
+    display: block;
+    width: fit-content;
+    margin: 20px auto;
+    padding: 12px 25px;
+    background-color: #f8c100;
+    color: #002f6c;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+a.boton-nuevo:hover {
+    background-color: #ffd633;
+    transform: scale(1.05);
+}
+
+/* Tabla contenedor */
+table {
+    width: 90%;
+    max-width: 850px;
+    margin: 30px auto;
+    background-color: white;
+    border-collapse: collapse;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.8s ease;
+}
+
+th, td {
+    padding: 14px 20px;
+    text-align: center;
+    font-size: 0.95rem;
+}
+
+th {
+    background-color: #002f6c;
+    color: white;
+    text-transform: uppercase;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #eaf1f8;
+}
+
+/* Botones editar/eliminar */
+td a {
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 2px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    color: white;
+}
+
+td a[href*="editarPasajero"] {
+    background-color: #235789;
+}
+
+td a[href*="editarPasajero"]:hover {
+    background-color: #1d456d;
+    transform: scale(1.05);
+}
+
+td a[href*="eliminarPasajero"] {
+    background-color: #d62828;
+}
+
+td a[href*="eliminarPasajero"]:hover {
+    background-color: #a61b1b;
+    transform: scale(1.05);
+}
+
+/* Botón volver */
+form button {
+    display: block;
+    margin: 30px auto;
+    padding: 12px 30px;
+    background-color: white;
+    color: #002f6c;
+    border: 2px solid #002f6c;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+form button:hover {
+    background-color: #002f6c;
+    color: white;
+    transform: scale(1.05);
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}

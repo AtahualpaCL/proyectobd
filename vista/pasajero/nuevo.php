@@ -1,19 +1,19 @@
 <?php require_once("vista/layout/header.php") ?>
+<link rel="stylesheet" href="/proyectobd/vista/pasajero/css/nuevo.css">
 
 <h1>Nuevo Pasajero</h1>
 <form action="" method="get">
-    <label>Nombres:</label><br>
+    <label>Nombres:</label>
     <input type="text" name="nombres" required><br>
 
-    <label>Apellidos:</label><br>
+    <label>Apellidos:</label>
     <input type="text" name="apellidos" required><br><br>
     
-    <label>Género:</label><br>
-    <span style="color: black;">Seleccione género</span><br>
+    <label>Género:</label>
     <input type="radio" name="genero" value="M" required> Masculino<br>
     <input type="radio" name="genero" value="F"> Femenino<br><br>
 
-    <label>Tipo de Documento:</label><br>
+    <label>Tipo de Documento:</label>
     <select name="tipo_documento" required>
         <option value="" disabled selected>Seleccione tipo de documento</option>
         <option value="DNI">Documento de Identidad</option>
@@ -21,14 +21,14 @@
         <option value="CE">Carnet de Extranjería</option>
     </select><br><br>
 
-    <label>Número de Documento:</label><br>
+    <label>Número de Documento:</label>
     <input type="text" name="numero_documento" required><br><br>
 
 
-    <label>Teléfono:</label><br>
+    <label>Teléfono:</label>
     <input type="text" name="telefono" required><br><br>
 
-    <label>Nacionalidad:</label><br>
+    <label>Nacionalidad:</label>
     <select name="nacionalidad" required>
         <option value="" disabled selected>Seleccione nacionalidad</option>
         <option value="Afganistán">Afganistán</option>
@@ -71,14 +71,14 @@
         <option value="Venezuela">Venezuela</option>
     </select><br><br>
 
-    <label>Fecha de Nacimiento:</label><br>
+    <label>Fecha de Nacimiento:</label>
     <input type="date" name="fech_nac" required><br><br>
 
-    <label>Email:</label><br>
+    <label>Email:</label>
     <input type="email" name="email" required><br><br>
 
-    <label>¿Es contacto de compra?</label><br>
-    <input type="checkbox" name="contacto_compra" value="1"> Sí<br><br>
+    <label>¿Es contacto de compra?</label>
+    <input type="checkbox" name="contacto_compra" value="1"> Sí<br>
 
         <label>Tipo de Pasajero:</label>
     <select name="tipo_pasajero" id="tipo_pasajero" required onchange="mostrarCamposEmpresa()">
