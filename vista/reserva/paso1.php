@@ -1,6 +1,15 @@
 <?php require_once("vista/layout/header.php") ?>
+<link rel="stylesheet" href="/proyectobd/vista/reserva/css/paso1.css">
 
 <h1>Realizar Reserva - Paso 1</h1>
+
+<div class="pasos">
+  <div class="paso active" data-step="1">Búsqueda</div>
+  <div class="paso" data-step="2">Trenes</div>
+  <div class="paso" data-step="3">Datos de Pasajeros</div>
+  <div class="paso" data-step="4">Confirmación y Pago</div>
+</div>
+
 
 <form method="post" action="index.php?m=paso2Reserva">
     <label>Tipo de Viaje:</label><br>
@@ -42,7 +51,7 @@
     <label>Infantes:</label><br>
     <input type="number" name="cant_infantes" min="0" value="0"><br><br>
 
-    <input type="submit" value="Siguiente">
+    <input type="submit" value="Siguiente" class="boton-amarillo">
 </form>
 
 <script>

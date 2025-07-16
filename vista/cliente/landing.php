@@ -1,3 +1,4 @@
+<?php require_once("vista/layout/header.php") ?>
 <link rel="stylesheet" href="/proyectobd/vista/cliente/landing.css">
 
 <header class="hero">
@@ -5,7 +6,7 @@
   <div class="content">
     <h1>¡Bienvenido a bordo!</h1>
     <p>Tu aventura en tren hacia Machu Picchu comienza aquí.</p>
-    <a href="index.php?m=indexReserva"><button>Reserva Ahora</button></a>
+    <a href="index.php?m=indexReserva" class="btn-reserva">Reserva Ahora</a>
   </div>
 </header>
 
@@ -37,35 +38,40 @@
 
 <section class="trenes">
   <h2>Nuestros Trenes</h2>
-  <div class="tren-card">
-    <img src="/proyectobd/vista/cliente/img/tren-vistadome.jpg" alt="Vistadome Interior">
-    <h3>Vistadome</h3>
-    <ul>
-      <li>Ventanas panorámicas y techo</li>
-      <li>Snack a bordo y música ambiental</li>
-      <li>Desfile de alpaca y audiotour</li>
-    </ul>
-  </div>
-  <div class="tren-card">
-    <img src="/proyectobd/vista/cliente/img/tren-observatory.jpg" alt="Observatory">
-    <h3>Vistadome Observatory</h3>
-    <ul>
-      <li>Coche observatorio y coche bar</li>
-      <li>Música y danza en vivo</li>
-      <li>Balcones y snack gourmet</li>
-    </ul>
-  </div>
-  <div class="tren-card">
-    <img src="/proyectobd/vista/cliente/img/tren-expedition.jpg" alt="Expedition">
-    <h3>Expedition</h3>
-    <ul>
-      <li>Opción económica con audio guía</li>
-      <li>Varias frecuencias diarias</li>
-      <li>Ambiente cálido y cultural</li>
-    </ul>
+  <div class="tren-grid">
+    <div class="tren-card">
+      <img src="/proyectobd/vista/cliente/img/tren-vistadome.jpg" alt="Vistadome Interior">
+      <h3>Vistadome</h3>
+      <ul>
+        <li>Ventanas panorámicas y techo</li>
+        <li>Snack a bordo y música ambiental</li>
+        <li>Desfile de alpaca y audiotour</li>
+      </ul>
+    </div>
+    <div class="tren-card">
+      <img src="/proyectobd/vista/cliente/img/tren-observatory.jpg" alt="Observatory">
+      <h3>Vistadome Observatory</h3>
+      <ul>
+        <li>Coche observatorio y coche bar</li>
+        <li>Música y danza en vivo</li>
+        <li>Balcones y snack gourmet</li>
+      </ul>
+    </div>
+    <div class="tren-card">
+      <img src="/proyectobd/vista/cliente/img/tren-expedition.jpg" alt="Expedition">
+      <h3>Expedition</h3>
+      <ul>
+        <li>Opción económica con audio guía</li>
+        <li>Varias frecuencias diarias</li>
+        <li>Ambiente cálido y cultural</li>
+      </ul>
+    </div>
   </div>
 </section>
+
 
 <footer>
   <p>&copy; 2025 Servicio de Trenes • Alta experiencia al viajero peruano e internacional.</p>
 </footer>
+
+<?php require_once("vista/layout/footer.php") ?>

@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f5f5f5;
+  margin: 0;
+  padding: 40px 20px;
+}
+
+h1 {
+  text-align: center;
+  color: #001f3f;
+  margin-bottom: 30px;
+}
+
+/* Pasos */
+.pasos {
+  display: flex;
+  justify-content: space-between;
+  max-width: 800px;
+  margin: 0 auto 40px;
+  position: relative;
+}
+
+.paso {
+  text-align: center;
+  flex: 1;
+  font-size: 14px;
+  color: #aaa;
+  font-weight: 600;
+  position: relative;
+}
+
+.paso .icon {
+  display: block;
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+.paso::before {
+  content: attr(data-step);
+  display: block;
+  width: 30px;
+  height: 30px;
+  line-height: 28px;
+  margin: 0 auto 5px;
+  border: 2px solid #aaa;
+  border-radius: 50%;
+  font-weight: bold;
+  color: #aaa;
+  background: white;
+}
+
+.paso.active {
+  color: #001f3f;
+}
+
+.paso.active::before {
+  border-color: #001f3f;
+  color: #001f3f;
+}
+
+.paso:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 14px;
+  right: -50%;
+  width: 100%;
+  height: 2px;
+  background-color: #ccc;
+  z-index: -1;
+}
+
+/* Formulario */
+form {
+  max-width: 500px;
+  margin: 0 auto;
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+label {
+  font-weight: 600;
+  margin-bottom: 5px;
+  display: block;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="number"],
+select {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 1rem;
+  margin-bottom: 18px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: border-color 0.3s;
+}
+
+input:focus,
+select:focus {
+  border-color: #004080;
+  outline: none;
+}
+
+/* Botón amarillo */
+.boton-amarillo {
+  width: 100%;
+  background-color: #ffd700;
+  color: #001f3f;
+  padding: 14px;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.boton-amarillo:hover {
+  background-color: #ffcc00;
+}
