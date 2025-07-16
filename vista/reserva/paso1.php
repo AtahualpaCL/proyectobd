@@ -24,7 +24,7 @@
         <option value="Cusco">Cusco</option>
         <option value="Puno">Puno</option>
         <option value="Arequipa">Arequipa</option>
-        <option value="MachuPicchu">Machu Picchu</option>
+        <option value="Machu Picchu">Machu Picchu</option>
     </select><br><br>
 
     <label>Fecha de salida:</label><br>

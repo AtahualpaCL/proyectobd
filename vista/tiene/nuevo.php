@@ -1,4 +1,5 @@
 <?php require_once("vista/layout/header.php"); ?>
+<link rel="stylesheet" href="/proyectobd/vista/tiene/css/nuevo.css">
 
 <h1>Asignar Transporte a Horario</h1>
 
@@ -19,7 +20,10 @@
         <?php endforeach; ?>
     </select><br><br>
 
-    <input type="submit" value="Guardar">
+    <div class="botones-form">
+        <input type="submit" value="Guardar" class="boton-guardar">
+        <button type="button" onclick="window.location.href='index.php?m=indexTiene'" class="boton-volver">Cancelar</button>
+    </div>
     <input type="hidden" name="m" value="guardarTiene">
 </form>
 

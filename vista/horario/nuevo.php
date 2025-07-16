@@ -1,4 +1,6 @@
 <?php require_once("vista/layout/header.php") ?>
+<link rel="stylesheet" href="/proyectobd/vista/horario/css/nuevo.css">
+
 <h1>Nuevo Horario</h1>
 <form method="get" action="">
     <label>Tipo:</label><br>
@@ -23,7 +25,10 @@
         <?php endforeach; ?>
     </select><br>
 
-    <input type="submit" value="Guardar">
+    <div class="botones-form">
+        <input type="submit" value="Guardar" class="boton-guardar">
+        <button type="button" onclick="window.location.href='index.php?m=indexHorario'" class="boton-volver">Cancelar</button>
+    </div>
     <input type="hidden" name="m" value="guardarHorario">
 </form>
 <?php require_once("vista/layout/footer.php") ?>

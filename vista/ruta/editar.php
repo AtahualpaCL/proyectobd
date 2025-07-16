@@ -9,7 +9,7 @@ $ciudades = ['Cusco', 'Machu Picchu', 'Ollantaytambo', 'Poroy'];
 $estaciones = ['Estación Wanchaq', 'Estación San Pedro', 'Estación Ollantaytambo', 'Estación Machu Picchu'];
 ?>
 
-<form method="post" action="">
+<form method="get" action="">
     <?php foreach($dato as $d): ?>
         <input type="hidden" name="id" value="<?= $d['id_ruta'] ?>">
 
