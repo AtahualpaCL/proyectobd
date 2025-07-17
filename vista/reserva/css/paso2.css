@@ -232,27 +232,53 @@ h2 {
 }
 
 /* Botón */
+/* Botón amarillo */
+.botones-form {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+input[type="submit"],
+.boton-volver,
 .boton-amarillo {
-  display: block;
-  width: 100%;
-  max-width: 300px;
-  margin: 40px auto 0;
-  padding: 14px;
-  font-size: 1rem;
-  font-weight: bold;
-  background: #ffd600;
-  color: #001f3f;
-  border: none;
-  border-radius: 30px;
-  cursor: pointer;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  animation: pulse 2s infinite;
+    width: 160px; /* Ajusta el tamaño del botón */
+    padding: 10px;
+    font-size: 0.95rem;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Botón Volver */
+.boton-volver {
+    background-color: white;
+    color: #002f6c;
+    border: 2px solid #002f6c;
+}
+
+.boton-volver:hover {
+    background-color: #002f6c;
+    color: white;
+    transform: scale(1.05);
+}
+
+/* Botón Siguiente */
+.boton-amarillo {
+    background-color: #f8c100;
+    color: #001f3f;
+    border: none; /* ❗️Esto elimina el borde azul */
+    animation: pulse 2s infinite;
 }
 
 .boton-amarillo:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    background-color: #ffd633;
+    transform: scale(1.05);
 }
 
 @keyframes pulse {

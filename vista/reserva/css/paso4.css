@@ -14,6 +14,11 @@ h1, h2, h3 {
   margin-top: 20px;
 }
 
+.resumen-container p.sin-secundarios {
+  font-style: italic;
+  color: #555;
+}
+
 .pasos {
   display: flex;
   justify-content: space-between;
@@ -89,12 +94,26 @@ h1, h2, h3 {
   margin: 0 auto;
 }
 
+.resumen-container h3 {
+  margin-top: 20px;
+  font-weight: 600;
+  color: #0a2540;
+}
+
 .resumen-container h3:last-of-type {
   margin-top: 18px;
   font-size: 16px;
   font-weight: bold;
   color: #0a2c52;
 }
+
+.resumen-container h3 + br + *,
+.resumen-container h3 + * {
+  display: block;
+  margin-bottom: 6px;
+  line-height: 1.5;
+}
+
 .resumen-container p,
 .resumen-container strong,
 .resumen-container br {
@@ -103,6 +122,15 @@ h1, h2, h3 {
   margin: 8px 0;
   font-size: 15px;
   font-family: 'Inter', sans-serif;
+}
+
+.detalle-pasajero-principal p {
+  margin: 6px 0;
+}
+
+.sin-secundarios {
+  font-style: italic;
+  color: #555;
 }
 
 .metodo-pago-form {
@@ -179,7 +207,6 @@ h1, h2, h3 {
   margin-right: auto;
 }
 
-
 input[type="submit"] {
   background-color: #ffc107;
   border: none;
@@ -190,10 +217,78 @@ input[type="submit"] {
   cursor: pointer;
   transition: background-color 0.3s ease;
   display: block;
-  width: 100%;
+  width: auto;
   font-weight: 600;
 }
 
 input[type="submit"]:hover {
   background-color: #e6ac00;
+}
+
+/* NUEVO: Botones alineados y con animación */
+.botones-form {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+.boton-volver,
+.boton-amarillo {
+  padding: 10px 24px;
+  font-size: 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+.boton-volver {
+  background-color: #fff;
+  color: #0a2540;
+  border: 2px solid #0a2540;
+}
+
+.boton-volver:hover {
+  background-color: #f0f0f0;
+}
+
+.boton-amarillo {
+  background-color: #f5b700;
+  color: #0a2540;
+  animation: pulse 2s infinite;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.boton-amarillo:hover {
+  background-color: #e0a800;
+  transform: scale(1.02);
+}
+
+.boton-volver:focus,
+.boton-amarillo:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Animación de pulso */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(245, 183, 0, 0.7);
+  }
+  70% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba(245, 183, 0, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(245, 183, 0, 0);
+  }
 }

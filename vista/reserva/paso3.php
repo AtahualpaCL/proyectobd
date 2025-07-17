@@ -317,7 +317,11 @@
         <hr>
     <?php } ?>
 
-    <button type="submit" class="boton-amarillo">Confirmar Datos y Continuar al Pago</button>
+    
+    <div class="botones-form">
+        <a href="index.php?m=paso2Reserva" class="boton-volver">Volver</a>
+        <input type="submit" value="Confirmar Datos y Continuar al Pago" class="boton-amarillo">
+    </div>
 </form>
 
 <script>

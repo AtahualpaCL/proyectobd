@@ -89,7 +89,11 @@
   </div>
 
   <input type="hidden" name="metodo_pago" id="metodo_pago" required>
-  <input type="submit" value="Confirmar y Pagar">
+  
+  <div class="botones-form">
+        <a href="index.php?m=paso3Reserva" class="boton-volver">Volver</a>
+        <input type="submit" value="Confirmar y Pagar" class="boton-amarillo">
+    </div>
 </form>
 
 
@@ -105,5 +109,16 @@
     });
   });
 </script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".resumen-container p").forEach(p => {
+        if (p.textContent.includes("No hay pasajeros secundarios")) {
+        p.classList.add("sin-secundarios");
+        }
+    });
+    });
+</script>
+
 
 <?php require_once("vista/layout/footer.php"); ?>

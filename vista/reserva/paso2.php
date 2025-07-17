@@ -40,7 +40,11 @@
 
   <input type="hidden" name="fase" value="<?= $fase ?>">
   <input type="hidden" name="m" value="paso2Reserva">
-  <button type="submit" class="boton-amarillo">Siguiente</button>
+
+    <div class="botones-form">
+        <a href="index.php?m=indexReserva" class="boton-volver">Volver</a>
+        <input type="submit" value="Siguiente" class="boton-amarillo">
+    </div>
 </form>
 
 <script>

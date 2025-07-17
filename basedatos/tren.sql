@@ -86,6 +86,7 @@ CREATE TABLE TRANSPORTE (
 CREATE TABLE HORARIO (
   id_horario INT AUTO_INCREMENT PRIMARY KEY,
   tipo VARCHAR(30) NOT NULL,
+  fecha DATE NOT NULL,
   hora_salida TIME NOT NULL,
   hora_llegada TIME NOT NULL,
   duracion_viaje TIME NOT NULL,
@@ -109,11 +110,14 @@ CREATE TABLE RESERVA (
   fecha_salida DATE DEFAULT NULL,
   fecha_retorno DATE DEFAULT NULL,
   id_pasajero INT NOT NULL,
-  id_horario INT NOT NULL,
+  id_horario_ida INT NOT NULL,
+  id_horario_retorno INT DEFAULT NULL,
   id_pago INT UNIQUE NOT NULL,
   FOREIGN KEY (id_pasajero) REFERENCES PASAJERO(id_pasajero)
     ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (id_horario) REFERENCES HORARIO(id_horario)
+  FOREIGN KEY (id_horario_ida) REFERENCES HORARIO(id_horario)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (id_horario_retorno) REFERENCES HORARIO(id_horario)
     ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (id_pago) REFERENCES PAGO(id_pago)
     ON DELETE CASCADE ON UPDATE CASCADE
