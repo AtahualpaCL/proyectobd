@@ -1,0 +1,272 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f5f5f5;
+  margin: 0;
+  padding: 40px 20px;
+}
+
+h1 {
+  text-align: center;
+  color: #001f3f;
+  margin-bottom: 30px;
+}
+
+.pasos {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.paso {
+  flex: 1;
+  text-align: center;
+  position: relative;
+  color: #aaa;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.paso::before {
+  content: attr(data-step);
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+  border: 2px solid #aaa;
+  border-radius: 50%;
+  line-height: 32px;
+  margin-bottom: 5px;
+  color: #aaa;
+  font-weight: 600;
+  background: white;
+}
+
+.paso.active {
+  color: #001f3f;
+}
+
+.paso.active::before {
+  border-color: #001f3f;
+  color: #001f3f;
+}
+
+.paso:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  right: -50%;
+  height: 2px;
+  background-color: #ccc;
+  z-index: -1;
+}
+
+.info-viaje {
+  max-width: 700px;
+  margin: 0 auto 20px;
+  text-align: center;
+  font-size: 1.1rem;
+  color: #333;
+  background: url('/proyectobd/vista/reserva/img/train-icon-bg.svg') no-repeat center left;
+  background-size: 40px;
+  padding-left: 50px;
+}
+
+.horario-card {
+  max-width: 700px;
+  margin: 20px auto;
+  background: white;
+  border-radius: 10px;
+  padding: 25px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  border-left: 6px solid #001f3f;
+}
+
+.opcion-transporte {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: #f8f8f8;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.opcion-transporte:hover {
+  background: #eef4ff;
+}
+
+.opcion-transporte input {
+  margin-top: 5px;
+}
+
+.opcion-transporte .contenido {
+  flex-grow: 1;
+}
+
+.opcion-transporte .servicios {
+  color: #555;
+  display: none;
+  margin-top: 5px;
+  font-size: 0.85rem;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f5f5f5;
+  margin: 0;
+  padding: 40px 20px;
+}
+
+h2 {
+  text-align: center;
+  color: #001f3f;
+  margin-bottom: 10px;
+}
+
+.info-viaje {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+  font-size: 1rem;
+}
+
+/* Pasos arriba */
+.pasos {
+  display: flex;
+  justify-content: space-between;
+  max-width: 800px;
+  margin: 0 auto 40px;
+  position: relative;
+}
+
+.paso {
+  text-align: center;
+  flex: 1;
+  font-size: 14px;
+  color: #aaa;
+  font-weight: 600;
+  position: relative;
+}
+
+.paso .icon {
+  display: block;
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+.paso::before {
+  content: attr(data-step);
+  display: block;
+  width: 30px;
+  height: 30px;
+  line-height: 28px;
+  margin: 0 auto 5px;
+  border: 2px solid #aaa;
+  border-radius: 50%;
+  font-weight: bold;
+  color: #aaa;
+  background: white;
+}
+
+.paso.active {
+  color: #001f3f;
+}
+
+.paso.active::before {
+  border-color: #001f3f;
+  color: #001f3f;
+}
+
+.paso:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 14px;
+  right: -50%;
+  width: 100%;
+  height: 2px;
+  background-color: #ccc;
+  z-index: -1;
+}
+
+/* Card de horarios */
+.horario-card {
+  max-width: 700px;
+  margin: 20px auto;
+  background: white;
+  border-radius: 10px;
+  padding: 25px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border-left: 6px solid #001f3f;
+}
+
+.opcion-transporte {
+  background-color: #f8f8f8;
+  padding: 14px 18px;
+  border-radius: 8px;
+  margin-top: 10px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.opcion-transporte:hover {
+  background-color: #eef4ff;
+}
+
+.opcion-transporte input {
+  margin-top: 6px;
+}
+
+.servicios {
+  margin-top: 4px;
+  font-size: 0.85rem;
+  color: #555;
+  display: none;
+}
+
+/* Botón */
+.boton-amarillo {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  margin: 40px auto 0;
+  padding: 14px;
+  font-size: 1rem;
+  font-weight: bold;
+  background: #ffd600;
+  color: #001f3f;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: pulse 2s infinite;
+}
+
+.boton-amarillo:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.7);
+  }
+  70% {
+    transform: scale(1.02);
+    box-shadow: 0 0 0 15px rgba(255, 193, 7, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 193, 7, 0);
+  }
+}
+

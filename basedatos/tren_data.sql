@@ -32,27 +32,50 @@ INSERT INTO TRIPULANTE_DE_CABINA VALUES
 
 -- 6. RUTA
 INSERT INTO RUTA (ciudad_origen, ciudad_destino, estacion_origen, estacion_destino)
-VALUES 
-('Lima', 'Cusco', 'Estación Lima', 'Estación Cusco'),
-('Arequipa', 'Tacna', 'Estación Arequipa', 'Estación Tacna');
+VALUES
+('Wanchaq', 'Machu Picchu', 'Wanchaq', 'Machu  Picchu'),
+('San Pedro', 'Machu Picchu', 'San Pedro', 'Machu  Picchu'),
+('Poroy', 'Machu Picchu', 'Poroy', 'Machu  Picchu'),
+('Urubamba', 'Machu Picchu', 'Urubamba', 'Machu Picchu'),
+('Ollantaytambo', 'Machu Picchu', 'Ollantaytambo', 'Machu Picchu');
 
 -- 7. CLASE
 INSERT INTO CLASE (clase, precio_clase, servicios)
 VALUES 
-('Económica', 100.00, 'WiFi, Aire Acondicionado'),
-('Turista', 180.00, 'WiFi, Comida, Aire Acondicionado');
+('Expedition', 100.00, 'Asientos reclinables, Aire acondicionado'),
+('Vistadome', 150.00, 'Ventanas panorámicas, Snacks'),
+('Vistadome Observatory', 180.00, 'Vista observatorio, Snacks, Bebidas'),
+('Hiram Bingham', 400.00, 'Servicio de lujo, Comida gourmet, Música en vivo'),
+('Titicaca', 300.00, 'Tren turístico de lujo, Comidas incluidas'),
+('ExpeditionH', 90.00, 'Ruta Hidroeléctrica, Asientos reclinables'),
+('VistadomeH', 120.00, 'Ruta Hidroeléctrica, Ventanas panorámicas');
 
 -- 8. TRANSPORTE
 INSERT INTO TRANSPORTE (id_clase, aforo)
-VALUES 
-(1, 50),
-(2, 40);
+VALUES
+(1, 50),  -- Expedition
+(2, 45),  -- Vistadome
+(3, 40),  -- Vistadome Observatory
+(4, 30);  -- Hiram Bingham
 
 -- 9. HORARIO
 INSERT INTO HORARIO (tipo, hora_salida, hora_llegada, duracion_viaje, id_ruta)
-VALUES 
-('Directo', '08:00:00', '12:00:00', '04:00:00', 1),
-('Escala', '09:30:00', '14:15:00', '04:45:00', 2);
+VALUES
+('Directo', '03:20:00', '07:40:00', '4:20:00', 3),
+('Directo', '04:20:00', '09:15:00', '4:55:00', 3),
+('Directo', '05:10:00', '09:15:00', '4:05:00', 3),
+('Directo', '06:40:00', '10:52:00', '4:12:00', 4),
+('Directo', '07:35:00', '10:52:00', '3:17:00', 5),
+('Directo', '06:06:00', '09:15:00', '03:09:00', 6),
+('Directo', '06:06:00', '09:15:00', '03:09:00', 6),
+('Directo', '06:06:00', '09:15:00', '03:09:00', 6),
+('Directo', '06:06:00', '09:15:00', '03:09:00', 6),
+('Directo', '06:06:00', '09:15:00', '03:09:00', 6),
+('Directo', '05:05:00', '06:37:00', '01:32:00', 7),
+('Directo', '07:05:00', '08:27:00', '01:22:00', 7),
+('Directo', '08:00:00', '09:25:00', '01:25:00', 7),
+('Directo', '08:53:00', '10:29:00', '01:36:00', 7),
+('Directo', '10:32:00', '12:11:00', '01:39:00', 7);
 
 -- 10. PAGO
 INSERT INTO PAGO (metodo_pago, fecha_pago, monto)
@@ -79,14 +102,23 @@ INSERT INTO PS_ADULTO (id_pasajerosec, nombres, apellidos, genero, tipo_document
 VALUES 
 (1, 'Laura', 'Fernandez', 'F', 'DNI', '45678912', 'Peruana', '1994-07-20', TRUE);
 
--- 14. ATIENDE, CONDUCE
 INSERT INTO ATIENDE VALUES
-(3, 1),
-(4, 2);
+(3, 1),  -- Tripulante 3 atiende el Expedition
+(4, 2),  -- Tripulante 4 atiende el Vistadome
+(3, 3),  -- Tripulante 3 atiende Vistadome Observatory
+(4, 4);  -- Tripulante 4 atiende Hiram Bingham
+
+-- CONDUCE (chofer maneja los transportes)
 INSERT INTO CONDUCE VALUES
-(2, 1);
+(2, 1),  -- Chofer 2 conduce Expedition
+(2, 2),  -- Conduce Vistadome
+(2, 3),  -- Conduce Vistadome Observatory
+(2, 4);  -- Conduce Hiram Bingham
 
 -- 15. TIENE
-INSERT INTO TIENE VALUES
-(1, 1),
-(2, 2);
+INSERT INTO TIENE (id_tran, id_horario)
+VALUES
+(1, 1),  -- Expedition → primer horario
+(3, 2),  -- Vistadome Observatory → segundo horario
+(2, 3),  -- Vistadome → tercer horario
+(4, 4);  -- Hiram Bingham → cuarto horario

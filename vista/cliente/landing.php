@@ -4,7 +4,7 @@
 <header class="hero">
   <div class="overlay"></div>
   <div class="content">
-    <h1>¡Bienvenido a bordo!</h1>
+    <h1>¡Bienvenido a PeruRail!</h1>
     <p>Tu aventura en tren hacia Machu Picchu comienza aquí.</p>
     <a href="index.php?m=indexReserva" class="btn-reserva">Reserva Ahora</a>
   </div>
@@ -66,6 +66,14 @@
         <li>Ambiente cálido y cultural</li>
       </ul>
     </div>
+    <div class="tren-card">
+      <img src="/proyectobd/vista/cliente/img/hiram-bingham.jpg" alt="Hiram Bingham">
+      <h3>Hiram Bingham</h3>
+      <p>Tren de lujo estilo Belmond</p>
+      <p>Menú gourmet de 3 tiempos</p>
+      <p>Bar abierto y show en vivo</p>
+    </div>
+</div>
   </div>
 </section>
 

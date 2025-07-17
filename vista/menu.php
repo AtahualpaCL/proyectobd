@@ -6,7 +6,6 @@
     <h2>Menú Principal de Administrador</h2>
     <ul class="menu-grid">
         <li><a href="index.php?m=indexPasajero"><i class="fas fa-user"></i> Pasajeros</a></li>
-        <li><a href="index.php?m=indexSecundario"><i class="fas fa-users"></i> Secundarios</a></li>
         <li><a href="index.php?m=indexEmpleado"><i class="fas fa-user-tie"></i> Empleados</a></li>
         <li><a href="index.php?m=indexClase"><i class="fas fa-chair"></i> Clases</a></li>
         <li><a href="index.php?m=indexTransporte"><i class="fas fa-train"></i> Transporte</a></li>
@@ -15,9 +14,17 @@
         <li><a href="index.php?m=indexRuta"><i class="fas fa-map-marked-alt"></i> Rutas</a></li>
         <li><a href="index.php?m=indexHorario"><i class="fas fa-clock"></i> Horarios</a></li>
         <li><a href="index.php?m=indexTiene"><i class="fas fa-link"></i> Tiene</a></li>
+
+        <!-- Si necesitas placeholders para simetría (solo si hay menos de 9) -->
+        <!--
+        <li class="menu-placeholder"></li>
+        <li class="menu-placeholder"></li>
+        -->
     </ul>
 </div>
-<div class="botones-form" style="margin-top: 30px;">
+
+<div class="botones-form">
     <a href="index.php" class="boton-volver">Volver al menú principal</a>
 </div>
+
 <?php require_once("vista/layout/footer.php"); ?>
