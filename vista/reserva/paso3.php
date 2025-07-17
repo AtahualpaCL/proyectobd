@@ -93,7 +93,7 @@
         <label>Fecha de Nacimiento:</label><br>
         <input type="date" name="pasajero[fech_nac]" required><br>
 
-        <label><input type="checkbox" class="checkbox-contacto" name="contacto_compra" value="principal" onchange="mostrarEmailEmpresa(this)">¿Es contacto de empresa?</label><br>
+        <label><input type="checkbox" class="checkbox-contacto" name="contacto_compra" value="principal" onchange="mostrarEmailEmpresa(this)">¿Es contacto de compra?</label><br>
 
         <div class="info-contacto" style="display:none;">
             <label>Correo electrónico:</label><br>
@@ -198,7 +198,7 @@
             <input type="date" name="pasajeros_secundarios[adulto][<?= $i ?>][fech_nac]" required><br>
 
             <label>
-            <input type="checkbox" class="checkbox-contacto" name="contacto_compra[]" value="adulto_<?= $i ?>" onchange="mostrarEmailEmpresa(this)">
+            <input type="checkbox" class="checkbox-contacto" name="contacto_compra" value="adulto_<?= $i ?>" onchange="mostrarEmailEmpresa(this)">
             ¿Es contacto de compra?
             </label><br>
 

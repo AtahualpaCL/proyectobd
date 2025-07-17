@@ -686,12 +686,28 @@ class modeloController {
         } elseif (strpos($contacto_compra, 'adulto_') === 0) {
             $index = explode('_', $contacto_compra)[1];
 
+            // Guardar al pasajero principal original ANTES de reemplazarlo
+            $_SESSION['reserva']['pasajero_original'] = $_POST['pasajero'];
+
             // Promover el adulto secundario seleccionado como principal
             $_SESSION['reserva']['pasajero'] = $_POST['pasajeros_secundarios']['adulto'][$index] ?? null;
 
             // Agregar el pasajero principal anterior como secundario adulto
             $nextIndex = count($_POST['pasajeros_secundarios']['adulto']) + 1;
-            $_POST['pasajeros_secundarios']['adulto'][$nextIndex] = $_POST['pasajero'];
+            $_POST['pasajeros_secundarios']['adulto'][$nextIndex] = $_SESSION['reserva']['pasajero_original'];
+            // Actualizar responsables en infantes si apuntaban al antiguo principal
+            if (isset($_POST['pasajeros_secundarios']['infante'])) {
+                foreach ($_POST['pasajeros_secundarios']['infante'] as &$infante) {
+                    if ($infante['responsable'] === 'principal') {
+                        // Ahora debe apuntar al nuevo índice en secundarios adultos
+                        $infante['responsable'] = 'secundario_' . $nextIndex;
+                    } elseif ($infante['responsable'] === "secundario_{$index}") {
+                        // Si el infante tenía como responsable al adulto que ahora es principal
+                        $infante['responsable'] = 'principal';
+                    }
+                }
+                unset($infante);
+            }
 
             // Eliminar el contacto de compra de los pasajeros secundarios
             unset($_POST['pasajeros_secundarios']['adulto'][$index]);
@@ -701,11 +717,11 @@ class modeloController {
             $_SESSION['reserva']['contacto_data'] = null;
         }
 
-        // Guardamos la lista actualizada de pasajeros secundarios
         $_SESSION['reserva']['pasajeros_secundarios'] = $_POST['pasajeros_secundarios'] ?? [];
 
         require_once("vista/reserva/paso4.php");
     }
+
 
 
     // Guardar todo en la base de datos
@@ -732,14 +748,23 @@ class modeloController {
         $id_contacto = $modelo->getLastId();
 
         // === 2. Insertar en PASAJERO_CORRIENTE o PASAJERO_EMPRESA ===
-        if (!empty($contacto['empresa'])) {
-            $empresa = $contacto['empresa'];
+        $empresa = null;
+        if (!empty($contacto['empresa_ruc']) || !empty($contacto['empresa_direccion']) || !empty($contacto['empresa_razon_social'])) {
+            $empresa = [
+                'ruc' => $contacto['empresa_ruc'],
+                'direccion' => $contacto['empresa_direccion'],
+                'razon_social' => $contacto['empresa_razon_social']
+            ];
+        }
+
+        if ($empresa) {
             $columnas = "id_pasajero, RUC, direccion, razonSocial";
             $valores = "$id_contacto, '{$empresa['ruc']}', '{$empresa['direccion']}', '{$empresa['razon_social']}'";
             $modelo->insertar("PASAJERO_EMPRESA", $columnas, $valores);
         } else {
             $modelo->insertar("PASAJERO_CORRIENTE", "id_pasajero", "$id_contacto");
         }
+
 
         // === 3. Insertar el pago en PAGO ===
         $fecha_pago = date('Y-m-d');

@@ -36,18 +36,38 @@
         echo "Correo: {$p['email']}<br>";
 
         // Mostrar pasajeros secundarios
-        if (!empty($reserva['pasajeros_secundarios'])) {
-            echo "<h3>Pasajeros Secundarios:</h3>";
-            foreach ($reserva['pasajeros_secundarios'] as $tipo => $grupo) {
-                foreach ($grupo as $idx => $sec) {
-                    echo "<strong>" . ucfirst($tipo) . " {$idx}:</strong> {$sec['nombres']} {$sec['apellidos']}<br>";
-                }
-            }
-        } else {
-            echo "<p>No hay pasajeros secundarios.</p>";
-        }
+      foreach ($reserva['pasajeros_secundarios'] as $tipo => $grupo) {
+          foreach ($grupo as $idx => $sec) {
+              echo "<strong>" . ucfirst($tipo) . " {$idx}:</strong> ";
 
-        // Calcular el monto total
+              if ($tipo === 'infante') {
+                  $responsable = $sec['responsable'] ?? 'No asignado';
+                  $nombreResponsable = 'No encontrado';
+
+                  if ($responsable === 'principal') {
+                      // Si es principal
+                      $nombreResponsable = $reserva['pasajero']['nombres'] . ' ' . $reserva['pasajero']['apellidos'];
+                  } elseif (strpos($responsable, 'secundario_') === 0) {
+                      $responsableIndex = explode('_', $responsable)[1];
+                      $adultos = $reserva['pasajeros_secundarios']['adulto'] ?? [];
+
+                      if (isset($adultos[$responsableIndex])) {
+                          $nombreResponsable = $adultos[$responsableIndex]['nombres'] . ' ' . $adultos[$responsableIndex]['apellidos'];
+                      }
+                  }
+
+                  echo "Responsable: {$nombreResponsable}<br>";
+              } else {
+                  $nombres = $sec['nombres'] ?? '';
+                  $apellidos = $sec['apellidos'] ?? '';
+                  echo "{$nombres} {$apellidos}<br>";
+              }
+          }
+      }
+
+
+
+       // Calcular el monto total
         $modelo = new Modelo();
         $monto_total = 0;
 
