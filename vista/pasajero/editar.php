@@ -15,6 +15,21 @@
         <label>Teléfono:</label><br>
         <input type="text" name="telefono" value="<?= $v['telefono'] ?>"><br>
 
+        <label>Género:</label><br>
+        <input type="text" name="genero" value="<?= $v['genero'] ?>"><br>
+
+        <label>Tipo de documento:</label><br>
+        <input type="text" name="tipo_documento" value="<?= $v['tipo_documento'] ?>"><br>
+
+        <label>Número de documento:</label><br>
+        <input type="text" name="numero_documento" value="<?= $v['numero_documento'] ?>"><br>
+
+        <label>Nacionalidad:</label><br>
+        <input type="text" name="nacionalidad" value="<?= $v['nacionalidad'] ?>"><br>
+
+        <label>Fecha de nacimiento:</label><br>
+        <input type="date" name="fech_nac" value="<?= $v['fech_nac'] ?>"><br>
+
         <label>Email:</label><br>
         <input type="email" name="email" value="<?= $v['email'] ?>"><br><br>
 

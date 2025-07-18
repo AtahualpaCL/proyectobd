@@ -69,10 +69,15 @@ class modeloController {
         $id = $_REQUEST['id'];
         $nombres = $_REQUEST['nombres'];
         $apellidos = $_REQUEST['apellidos'];
+        $genero = $_REQUEST['genero'];
+        $tipo_documento = $_REQUEST['tipo_documento'];
+        $numero_documento = $_REQUEST['numero_documento'];
         $telefono = $_REQUEST['telefono'];
+        $nacionalidad = $_REQUEST['nacionalidad'];
+        $fech_nac = $_REQUEST['fech_nac'];
         $email = $_REQUEST['email'];
 
-        $data = "nombres='$nombres', apellidos='$apellidos', telefono='$telefono', email='$email'";
+        $data = "nombres='$nombres', apellidos='$apellidos', genero='$genero', tipo_documento='$tipo_documento', numero_documento='$numero_documento',telefono='$telefono', nacionalidad='$nacionalidad', fech_nac='$fech_nac', email='$email'";
 
         $pasajero = new Modelo();
         $pasajero->actualizar("PASAJERO", $data, "id_pasajero=".$id);

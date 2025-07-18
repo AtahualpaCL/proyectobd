@@ -44,7 +44,7 @@
     <script>
     // Mapeo de ciudades destino por ciudad origen
     const destinosPorOrigen = {
-        "Cusco": ["Urubamba", "Ollantaytambo", "Machu Picchu", "Hidroelectrica"],
+        "Cusco": ["Machu Picchu"],
         "Urubamba": [ "Machu Picchu"],
         "Ollantaytambo": ["Machu Picchu"],
         "Machu Picchu": ["Cusco", "Urubamba", "Ollantaytambo", "Hidroelectrica"],
